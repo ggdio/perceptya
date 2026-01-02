@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perceptya | Data Strategy & Applied AI</title>
+    <meta name="description" content="Turning investments in Tech, Data, and AI into real business results. Premium nearshore execution.">
+    
+    <!-- Fonts: Urbanist (Premium Tech feel) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Custom Config for Brand Colors -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Urbanist', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            dark: '#0B1120',    /* Deepest Navy */
+                            navy: '#152238',    /* Primary Navy */
+                            light: '#1E293B',   /* Lighter Navy for Cards */
+                            gold: '#D4AF37',    /* Metallic Gold */
+                            goldLight: '#F3E5AB',
+                            text: '#CBD5E1',    /* Soft Grey Text */
+                            white: '#F8FAFC'
+                        }
+                    },
+                    backgroundImage: {
+                        'hero-pattern': "radial-gradient(circle at 50% 50%, rgba(21, 34, 56, 0.8), rgba(11, 17, 32, 1))",
+                        'lens-glow': "radial-gradient(circle, rgba(212, 175, 55, 0.15) 0%, rgba(11, 17, 32, 0) 70%)"
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Animations */
+        @keyframes aperture-spin {
+            0% { transform: rotate(0deg) scale(1); }
+            50% { transform: rotate(180deg) scale(0.95); }
+            100% { transform: rotate(360deg) scale(1); }
+        }
+        .animate-aperture {
+            animation: aperture-spin 20s linear infinite;
+        }
+        
+        .glass-panel {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .gold-gradient-text {
+            background: linear-gradient(to right, #D4AF37, #F3E5AB, #D4AF37);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 5s linear infinite;
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+        
+        /* Smooth reveal for sections */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Language Selector Styles */
+        .lang-btn {
+            opacity: 0.6;
+            transition: all 0.2s;
+        }
+        .lang-btn:hover, .lang-btn.active {
+            opacity: 1;
+            color: #D4AF37;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body class="bg-brand-dark text-brand-text antialiased selection:bg-brand-gold selection:text-brand-dark">
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-panel border-b border-white/5 transition-all duration-300" id="navbar">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
+                    <!-- Aperture Logo SVG -->
+                    <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M50 50L50 10L84.64 30L84.64 70L50 90L15.36 70L15.36 30L50 10" stroke="#D4AF37" stroke-width="2" stroke-opacity="0.5"/>
+                        <circle cx="50" cy="50" r="15" stroke="#D4AF37" stroke-width="3"/>
+                        <path d="M50 20L65 45H35L50 20Z" fill="#D4AF37" fill-opacity="0.8"/>
+                        <path d="M50 80L35 55H65L50 80Z" fill="#152238" stroke="#D4AF37"/>
+                        <circle cx="50" cy="50" r="38" stroke="#D4AF37" stroke-width="1" stroke-dasharray="4 4" class="animate-[spin_10s_linear_infinite]"/>
+                    </svg>
+                    <span class="text-2xl font-bold tracking-tight text-white">PERCEPTYA</span>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8">
+                    <div class="flex items-baseline space-x-8">
+                        <a href="#manifesto" class="hover:text-brand-gold transition-colors px-3 py-2 text-sm font-medium" data-i18n="nav.manifesto">Manifesto</a>
+                        <a href="#servicos" class="hover:text-brand-gold transition-colors px-3 py-2 text-sm font-medium" data-i18n="nav.services">Services</a>
+                        <a href="#tech" class="hover:text-brand-gold transition-colors px-3 py-2 text-sm font-medium" data-i18n="nav.tech">Technology</a>
+                    </div>
+                    
+                    <!-- Language Switcher -->
+                    <div class="flex items-center gap-3 border-l border-white/10 pl-6">
+                        <button onclick="changeLanguage('en')" class="lang-btn active text-sm font-medium" id="btn-en">EN</button>
+                        <button onclick="changeLanguage('pt')" class="lang-btn text-sm font-medium" id="btn-pt">PT</button>
+                        <button onclick="changeLanguage('es')" class="lang-btn text-sm font-medium" id="btn-es">ES</button>
+                    </div>
+
+                    <a href="#contato" class="bg-brand-gold text-brand-dark hover:bg-white transition-all px-5 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-brand-gold/20" data-i18n="nav.cta">
+                        Talk to an Expert
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="-mr-2 flex md:hidden gap-4 items-center">
+                    <!-- Mobile Lang Switcher -->
+                     <div class="flex items-center gap-2">
+                        <button onclick="changeLanguage('en')" class="text-xs font-bold text-brand-gold">EN</button>
+                        <button onclick="changeLanguage('pt')" class="text-xs font-bold text-gray-500">PT</button>
+                    </div>
+                    <button type="button" class="text-gray-300 hover:text-white p-2" onclick="document.getElementById('mobile-menu').classList.toggle('hidden')">
+                        <i data-lucide="menu" class="w-8 h-8"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div class="hidden md:hidden glass-panel border-t border-white/10" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#manifesto" class="block px-3 py-2 rounded-md text-base font-medium hover:text-brand-gold" data-i18n="nav.manifesto">Manifesto</a>
+                <a href="#servicos" class="block px-3 py-2 rounded-md text-base font-medium hover:text-brand-gold" data-i18n="nav.services">Services</a>
+                <a href="#contato" class="block px-3 py-2 mt-4 text-center rounded-md text-base font-bold bg-brand-gold text-brand-dark" data-i18n="nav.cta">Talk to an Expert</a>
+                <div class="flex justify-center gap-4 py-4 border-t border-white/5 mt-4">
+                    <button onclick="changeLanguage('en')" class="text-sm font-bold text-brand-gold">English</button>
+                    <button onclick="changeLanguage('pt')" class="text-sm font-bold text-gray-400">Português</button>
+                    <button onclick="changeLanguage('es')" class="text-sm font-bold text-gray-400">Español</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <!-- Background Elements -->
+        <div class="absolute inset-0 z-0">
+            <div class="absolute inset-0 bg-brand-dark opacity-90"></div>
+            <!-- Animated Aperture Effect -->
+            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-lens-glow rounded-full blur-3xl opacity-40 animate-pulse"></div>
+            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+        </div>
+
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-gold/30 bg-brand-gold/5 backdrop-blur-sm mb-8 animate-fade-in-up">
+                <span class="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></span>
+                <span class="text-brand-gold text-xs font-bold tracking-widest uppercase">Premium Nearshore Data & AI</span>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-brand-white tracking-tight mb-8 leading-tight">
+                <span data-i18n="hero.title1">We see what</span> <br>
+                <span class="gold-gradient-text" data-i18n="hero.title2">others miss.</span>
+            </h1>
+            
+            <p class="mt-4 max-w-2xl mx-auto text-xl md:text-2xl text-brand-text font-light leading-relaxed">
+                <span data-i18n="hero.subtitle">Turning investments in Tech, Data, and AI into </span>
+                <strong class="text-white font-semibold" data-i18n="hero.subtitleBold">real business results</strong>.
+                <span data-i18n="hero.subtitleEnd">No fluff, just disciplined execution.</span>
+            </p>
+            
+            <div class="mt-12 flex flex-col sm:flex-row gap-6 justify-center items-center">
+                <a href="#contato" class="group relative px-8 py-4 bg-brand-gold text-brand-dark font-bold text-lg rounded-full overflow-hidden shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] transition-all">
+                    <div class="absolute inset-0 w-full h-full bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -translate-x-full skew-x-12"></div>
+                    <span class="relative flex items-center gap-2">
+                        <span data-i18n="hero.ctaPrimary">Schedule Diagnostic</span>
+                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                    </span>
+                </a>
+                <a href="#servicos" class="text-white hover:text-brand-gold font-medium transition-colors flex items-center gap-2">
+                    <span data-i18n="hero.ctaSecondary">Explore Solutions</span> <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                </a>
+            </div>
+        </div>
+        
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+            <i data-lucide="mouse" class="w-6 h-6 text-brand-gold/50"></i>
+        </div>
+    </header>
+
+    <!-- Manifesto / Tese Section -->
+    <section id="manifesto" class="py-24 bg-brand-navy relative reveal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div>
+                    <h2 class="text-brand-gold text-sm font-bold tracking-widest uppercase mb-4" data-i18n="manifesto.label">Our Thesis</h2>
+                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                        <span data-i18n="manifesto.title">Execution comes before <br>discourse.</span>
+                    </h3>
+                    <div class="space-y-6 text-lg text-gray-300">
+                        <p>
+                            <span data-i18n="manifesto.p1">Mid and large enterprises don't fail to capture AI value due to lack of tools, but due to lack of orchestration between </span>
+                            <span class="text-white font-semibold" data-i18n="manifesto.p1Bold">Strategy, Engineering, and Execution</span>.
+                        </p>
+                        <p data-i18n="manifesto.p2">
+                            Perceptya exists to fill this gap. Positioned between slide-deck consultancies and generic body shops, we deliver critical senior capacity with a product vision.
+                        </p>
+                    </div>
+                    
+                    <div class="mt-10 grid grid-cols-2 gap-6">
+                        <div class="border-l-2 border-brand-gold pl-4">
+                            <span class="block text-3xl font-bold text-white">Day 1</span>
+                            <span class="text-sm text-gray-400">Nearshore & Global</span>
+                        </div>
+                        <div class="border-l-2 border-brand-gold pl-4">
+                            <span class="block text-3xl font-bold text-white">Vendor</span>
+                            <span class="text-sm text-gray-400">Aware, not locked</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="relative">
+                    <!-- Abstract Visualization of Layers -->
+                    <div class="aspect-square rounded-2xl bg-gradient-to-br from-brand-light to-brand-dark border border-white/5 p-8 relative overflow-hidden shadow-2xl group">
+                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
+                        
+                        <!-- Floating Elements representing Data Layers -->
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-brand-gold/20 rounded-full group-hover:scale-110 transition-transform duration-700"></div>
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-brand-gold/40 rounded-full group-hover:scale-125 transition-transform duration-700 delay-75"></div>
+                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-brand-gold/10 rounded-full backdrop-blur-md flex items-center justify-center border border-brand-gold group-hover:scale-150 transition-transform duration-700 delay-150">
+                            <i data-lucide="aperture" class="w-12 h-12 text-brand-gold animate-spin-slow"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="servicos" class="py-24 bg-brand-dark relative reveal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-brand-gold text-sm font-bold tracking-widest uppercase mb-4" data-i18n="services.label">Service Portfolio</h2>
+                <h3 class="text-4xl font-bold text-white" data-i18n="services.title">The G1-G4 Model</h3>
+                <p class="mt-4 text-xl text-gray-400 max-w-2xl mx-auto" data-i18n="services.subtitle">A structured journey from diagnosis to continuous AI operation.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- G1 Card -->
+                <div class="group glass-panel p-8 rounded-2xl hover:border-brand-gold/50 transition-all hover:-translate-y-2">
+                    <div class="w-12 h-12 rounded-lg bg-brand-navy border border-brand-gold/20 flex items-center justify-center mb-6 group-hover:bg-brand-gold group-hover:text-brand-dark transition-colors">
+                        <span class="font-bold text-xl">G1</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">Diagnostic</h4>
+                    <p class="text-sm text-gray-400 mb-4">4-6 Weeks</p>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> <span data-i18n="services.g1.p1">Data Maturity</span></li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> <span data-i18n="services.g1.p2">To-Be Architecture</span></li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> <span data-i18n="services.g1.p3">Business Case ROI</span></li>
+                    </ul>
+                </div>
+
+                <!-- G2 Card -->
+                <div class="group glass-panel p-8 rounded-2xl hover:border-brand-gold/50 transition-all hover:-translate-y-2">
+                    <div class="w-12 h-12 rounded-lg bg-brand-navy border border-brand-gold/20 flex items-center justify-center mb-6 group-hover:bg-brand-gold group-hover:text-brand-dark transition-colors">
+                        <span class="font-bold text-xl">G2</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">Modernization</h4>
+                    <p class="text-sm text-gray-400 mb-4">Build & Migrate</p>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> Data Mesh & Lakes</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> <span data-i18n="services.g2.p2">Medallion Governance</span></li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> <span data-i18n="services.g2.p3">BigQuery Migration</span></li>
+                    </ul>
+                </div>
+
+                <!-- G3 Card -->
+                <div class="group glass-panel p-8 rounded-2xl hover:border-brand-gold/50 transition-all hover:-translate-y-2 relative overflow-hidden">
+                    <div class="absolute -right-10 -top-10 w-24 h-24 bg-brand-gold/10 rounded-full blur-xl"></div>
+                    <div class="w-12 h-12 rounded-lg bg-brand-navy border border-brand-gold/20 flex items-center justify-center mb-6 group-hover:bg-brand-gold group-hover:text-brand-dark transition-colors">
+                        <span class="font-bold text-xl">G3</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">Applied AI</h4>
+                    <p class="text-sm text-gray-400 mb-4">Innovation</p>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> GenAI & RAG</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> Vertex AI Agents</li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> <span data-i18n="services.g3.p3">Intelligent Automation</span></li>
+                    </ul>
+                </div>
+
+                <!-- G4 Card -->
+                <div class="group glass-panel p-8 rounded-2xl hover:border-brand-gold/50 transition-all hover:-translate-y-2 border-brand-gold/20 border">
+                    <div class="w-12 h-12 rounded-lg bg-brand-navy border border-brand-gold/20 flex items-center justify-center mb-6 group-hover:bg-brand-gold group-hover:text-brand-dark transition-colors">
+                        <span class="font-bold text-xl">G4</span>
+                    </div>
+                    <h4 class="text-xl font-bold text-white mb-2">Embedded Pods</h4>
+                    <p class="text-sm text-gray-400 mb-4">Scale & Run</p>
+                    <ul class="space-y-2 text-gray-300 text-sm">
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> <span data-i18n="services.g4.p1">Dedicated Squads</span></li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> <span data-i18n="services.g4.p2">Continuous Evolution</span></li>
+                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> <span data-i18n="services.g4.p3">Nearshore Mgmt</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technology Section -->
+    <section id="tech" class="py-24 bg-brand-navy border-y border-white/5 reveal">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row gap-12 items-center">
+                <div class="md:w-1/2">
+                    <h2 class="text-brand-gold text-sm font-bold tracking-widest uppercase mb-4" data-i18n="tech.label">Tech Stack & Expertise</h2>
+                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-6" data-i18n="tech.title">Modern Engineering <br>and Cloud Native.</h3>
+                    <p class="text-gray-300 mb-6" data-i18n="tech.desc">
+                        Born in the cloud, we are specialists in the modern data ecosystem. Our reference architecture ensures scale, security, and governance from day zero.
+                    </p>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="flex items-center gap-3 p-3 bg-brand-dark rounded-lg border border-white/5">
+                            <i data-lucide="database" class="text-blue-400"></i>
+                            <span class="text-sm font-semibold text-white">BigQuery & Lakehouse</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-brand-dark rounded-lg border border-white/5">
+                            <i data-lucide="cpu" class="text-purple-400"></i>
+                            <span class="text-sm font-semibold text-white">Vertex AI & Gemini</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-brand-dark rounded-lg border border-white/5">
+                            <i data-lucide="layout-grid" class="text-orange-400"></i>
+                            <span class="text-sm font-semibold text-white">Data Mesh Architecture</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-brand-dark rounded-lg border border-white/5">
+                            <i data-lucide="shield-check" class="text-green-400"></i>
+                            <span class="text-sm font-semibold text-white">GCP DLP & Governance</span>
+                        </div>
+                        <div class="flex items-center gap-3 p-3 bg-brand-dark rounded-lg border border-white/5">
+                            <i data-lucide="workflow" class="text-cyan-400"></i>
+                            <span class="text-sm font-semibold text-white">Dataform & Dataflow</span>
+                        </div>
+                         <div class="flex items-center gap-3 p-3 bg-brand-dark rounded-lg border border-white/5">
+                            <i data-lucide="git-branch" class="text-gray-400"></i>
+                            <span class="text-sm font-semibold text-white">Terraform & CI/CD</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="md:w-1/2 relative">
+                    <!-- Tech Visualization -->
+                    <div class="bg-brand-dark p-8 rounded-2xl border border-white/10 shadow-2xl">
+                        <div class="space-y-4 font-mono text-sm">
+                            <div class="flex items-center gap-2 text-gray-500">
+                                <span class="text-green-500">$</span> terraform apply -auto-approve
+                            </div>
+                            <div class="text-gray-300 pl-4">
+                                <span class="text-purple-400">module.data_mesh</span>: Creating...<br>
+                                <span class="text-blue-400">resource.bigquery_dataset.gold_layer</span>: Created [id=projects/perceptya/datasets/gold]<br>
+                                <span class="text-blue-400">resource.vertex_ai_endpoint.genai_agent</span>: Created [id=123456789]<br>
+                                <span class="text-green-400">Apply complete! Resources: 24 added, 0 changed, 0 destroyed.</span>
+                            </div>
+                            <div class="h-px bg-white/10 my-4"></div>
+                            <div class="flex items-center gap-2 text-white font-bold">
+                                <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
+                                System Operational: All Data Domains Active
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer / Contact -->
+    <footer id="contato" class="bg-black pt-24 pb-12 border-t border-brand-gold/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <div class="col-span-1 lg:col-span-2">
+                    <div class="flex items-center gap-2 mb-6">
+                         <svg width="30" height="30" viewBox="0 0 100 100" fill="none">
+                            <circle cx="50" cy="50" r="45" stroke="#D4AF37" stroke-width="2"/>
+                            <path d="M50 20L65 45H35L50 20Z" fill="#D4AF37"/>
+                        </svg>
+                        <span class="text-2xl font-bold text-white tracking-tight">PERCEPTYA</span>
+                    </div>
+                    <p class="text-gray-400 max-w-sm mb-6" data-i18n="footer.about">
+                        Premium digital execution, data, and AI firm in nearshore model. Focused on solving critical product and technology bottlenecks.
+                    </p>
+                    <div class="flex gap-4">
+                        <a href="#" class="w-10 h-10 rounded-full bg-brand-light flex items-center justify-center text-brand-gold hover:bg-brand-gold hover:text-brand-dark transition-colors">
+                            <i data-lucide="linkedin" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-brand-light flex items-center justify-center text-brand-gold hover:bg-brand-gold hover:text-brand-dark transition-colors">
+                            <i data-lucide="instagram" class="w-5 h-5"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 rounded-full bg-brand-light flex items-center justify-center text-brand-gold hover:bg-brand-gold hover:text-brand-dark transition-colors">
+                            <i data-lucide="mail" class="w-5 h-5"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold mb-6" data-i18n="footer.servicesTitle">Services</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">Data Diagnostic</a></li>
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">Platform Modernization</a></li>
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">Applied AI & GenAI</a></li>
+                        <li><a href="#" class="hover:text-brand-gold transition-colors">Dedicated Pods</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold mb-6" data-i18n="footer.contactTitle">Contact</h4>
+                    <ul class="space-y-4 text-gray-400 text-sm">
+                        <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-brand-gold"></i> São Paulo, SP</li>
+                        <li class="flex items-center gap-2"><i data-lucide="globe" class="w-4 h-4 text-brand-gold"></i> Nearshore Operations</li>
+                        <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-brand-gold"></i> hello@perceptya.com</li>
+                    </ul>
+                    <a href="mailto:hello@perceptya.com" class="mt-6 inline-block px-6 py-3 border border-brand-gold text-brand-gold font-bold text-sm rounded hover:bg-brand-gold hover:text-brand-dark transition-colors" data-i18n="footer.contactBtn">
+                        Start Conversation
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
+                <p data-i18n="footer.rights">&copy; 2024 Perceptya. All rights reserved.</p>
+                <div class="flex gap-6 mt-4 md:mt-0">
+                    <a href="#" class="hover:text-white" data-i18n="footer.privacy">Privacy</a>
+                    <a href="#" class="hover:text-white" data-i18n="footer.terms">Terms</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Translation Dictionary
+        const translations = {
+            en: {
+                "nav.manifesto": "Manifesto",
+                "nav.services": "Services",
+                "nav.tech": "Technology",
+                "nav.cta": "Talk to an Expert",
+                "hero.title1": "We see what",
+                "hero.title2": "others miss.",
+                "hero.subtitle": "Turning investments in Tech, Data, and AI into ",
+                "hero.subtitleBold": "real business results",
+                "hero.subtitleEnd": ". No fluff, just disciplined execution.",
+                "hero.ctaPrimary": "Schedule Diagnostic",
+                "hero.ctaSecondary": "Explore Solutions",
+                "manifesto.label": "Our Thesis",
+                "manifesto.title": "Execution comes before <br>discourse.",
+                "manifesto.p1": "Mid and large enterprises don't fail to capture AI value due to lack of tools, but due to lack of orchestration between ",
+                "manifesto.p1Bold": "Strategy, Engineering, and Execution",
+                "manifesto.p2": "Perceptya exists to fill this gap. Positioned between slide-deck consultancies and generic body shops, we deliver critical senior capacity with a product vision.",
+                "services.label": "Service Portfolio",
+                "services.title": "The G1-G4 Model",
+                "services.subtitle": "A structured journey from diagnosis to continuous AI operation.",
+                "services.g1.p1": "Data Maturity",
+                "services.g1.p2": "To-Be Architecture",
+                "services.g1.p3": "Business Case ROI",
+                "services.g2.p2": "Medallion Governance",
+                "services.g2.p3": "BigQuery Migration",
+                "services.g3.p3": "Intelligent Automation",
+                "services.g4.p1": "Dedicated Squads",
+                "services.g4.p2": "Continuous Evolution",
+                "services.g4.p3": "Nearshore Mgmt",
+                "tech.label": "Tech Stack & Expertise",
+                "tech.title": "Modern Engineering <br>and Cloud Native.",
+                "tech.desc": "Born in the cloud, we are specialists in the modern data ecosystem. Our reference architecture ensures scale, security, and governance from day zero.",
+                "footer.about": "Premium digital execution, data, and AI firm in nearshore model. Focused on solving critical product and technology bottlenecks.",
+                "footer.servicesTitle": "Services",
+                "footer.contactTitle": "Contact",
+                "footer.contactBtn": "Start Conversation",
+                "footer.rights": "&copy; 2024 Perceptya. All rights reserved.",
+                "footer.privacy": "Privacy",
+                "footer.terms": "Terms"
+            },
+            pt: {
+                "nav.manifesto": "Manifesto",
+                "nav.services": "Serviços",
+                "nav.tech": "Tecnologia",
+                "nav.cta": "Falar com Especialista",
+                "hero.title1": "Vemos o que",
+                "hero.title2": "os outros não veem.",
+                "hero.subtitle": "Transformando investimentos em Tecnologia, Dados e IA em ",
+                "hero.subtitleBold": "resultado real de negócio",
+                "hero.subtitleEnd": ". Sem discurso, apenas execução disciplinada.",
+                "hero.ctaPrimary": "Agendar Diagnóstico",
+                "hero.ctaSecondary": "Explorar Soluções",
+                "manifesto.label": "Nossa Tese",
+                "manifesto.title": "Execução vem antes <br>do discurso.",
+                "manifesto.p1": "Empresas médias e grandes não falham em capturar valor de IA por falta de ferramentas, mas pela ausência de orquestração entre ",
+                "manifesto.p1Bold": "Estratégia, Engenharia e Execução",
+                "manifesto.p2": "A Perceptya existe para preencher esse vácuo. Posicionada entre as consultorias de slide e os body shops genéricos, entregamos capacidade sênior crítica com visão de produto.",
+                "services.label": "Portfólio de Serviços",
+                "services.title": "O Modelo G1-G4",
+                "services.subtitle": "Uma jornada estruturada desde o diagnóstico até a operação contínua de IA.",
+                "services.g1.p1": "Maturidade de Dados",
+                "services.g1.p2": "Arquitetura To-Be",
+                "services.g1.p3": "Business Case ROI",
+                "services.g2.p2": "Governança Medallion",
+                "services.g2.p3": "Migração BigQuery",
+                "services.g3.p3": "Automação Inteligente",
+                "services.g4.p1": "Squads Dedicados",
+                "services.g4.p2": "Evolução Contínua",
+                "services.g4.p3": "Gestão Nearshore",
+                "tech.label": "Tech Stack & Expertise",
+                "tech.title": "Engenharia Moderna <br>e Cloud Native.",
+                "tech.desc": "Nascemos na nuvem e somos especialistas no ecossistema de dados moderno. Nossa arquitetura de referência garante escala, segurança e governança desde o dia zero.",
+                "footer.about": "Empresa premium de execução digital, dados e IA em modelo nearshore. Focada em resolver gargalos críticos de produto e tecnologia.",
+                "footer.servicesTitle": "Serviços",
+                "footer.contactTitle": "Contato",
+                "footer.contactBtn": "Iniciar Conversa",
+                "footer.rights": "&copy; 2024 Perceptya. Todos os direitos reservados.",
+                "footer.privacy": "Privacidade",
+                "footer.terms": "Termos"
+            },
+            es: {
+                "nav.manifesto": "Manifiesto",
+                "nav.services": "Servicios",
+                "nav.tech": "Tecnología",
+                "nav.cta": "Hablar con Experto",
+                "hero.title1": "Vemos lo que",
+                "hero.title2": "otros no ven.",
+                "hero.subtitle": "Transformando inversiones en Tecnología, Datos e IA en ",
+                "hero.subtitleBold": "resultados reales de negocio",
+                "hero.subtitleEnd": ". Sin discursos, solo ejecución disciplinada.",
+                "hero.ctaPrimary": "Agendar Diagnóstico",
+                "hero.ctaSecondary": "Explorar Soluciones",
+                "manifesto.label": "Nuestra Tesis",
+                "manifesto.title": "La ejecución precede <br>al discurso.",
+                "manifesto.p1": "Las empresas medianas y grandes no fallan en capturar valor de IA por falta de herramientas, sino por la falta de orquestación entre ",
+                "manifesto.p1Bold": "Estrategia, Ingeniería y Ejecución",
+                "manifesto.p2": "Perceptya existe para llenar este vacío. Posicionada entre las consultorías de diapositivas y los body shops genéricos, entregamos capacidad senior crítica con visión de producto.",
+                "services.label": "Portafolio de Servicios",
+                "services.title": "El Modelo G1-G4",
+                "services.subtitle": "Una jornada estructurada desde el diagnóstico hasta la operación continua de IA.",
+                "services.g1.p1": "Madurez de Datos",
+                "services.g1.p2": "Arquitectura To-Be",
+                "services.g1.p3": "Business Case ROI",
+                "services.g2.p2": "Gobernanza Medallion",
+                "services.g2.p3": "Migración BigQuery",
+                "services.g3.p3": "Automatización Inteligente",
+                "services.g4.p1": "Squads Dedicados",
+                "services.g4.p2": "Evolución Continua",
+                "services.g4.p3": "Gestión Nearshore",
+                "tech.label": "Tech Stack & Expertise",
+                "tech.title": "Ingeniería Moderna <br>y Cloud Native.",
+                "tech.desc": "Nacidos en la nube, somos especialistas en el ecosistema de datos moderno. Nuestra arquitectura de referencia garantiza escala, seguridad y gobernanza desde el día cero.",
+                "footer.about": "Firma premium de ejecución digital, datos e IA en modelo nearshore. Enfocada en resolver cuellos de botella críticos de producto y tecnología.",
+                "footer.servicesTitle": "Servicios",
+                "footer.contactTitle": "Contacto",
+                "footer.contactBtn": "Iniciar Conversación",
+                "footer.rights": "&copy; 2024 Perceptya. Todos los derechos reservados.",
+                "footer.privacy": "Privacidad",
+                "footer.terms": "Términos"
+            }
+        };
+
+        function changeLanguage(lang) {
+            // Update Text
+            const elements = document.querySelectorAll('[data-i18n]');
+            elements.forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang][key]) {
+                    // Check if content has HTML tags (like <br> or <strong>)
+                    if (translations[lang][key].includes('<') || el.children.length > 0) {
+                         el.innerHTML = translations[lang][key];
+                    } else {
+                        el.textContent = translations[lang][key];
+                    }
+                }
+            });
+            
+            // Update Active Button
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            const activeBtn = document.getElementById(`btn-${lang}`);
+            if(activeBtn) activeBtn.classList.add('active');
+            
+            // Re-trigger icon updates if needed (not needed strictly for text)
+        }
+
+        // Scroll Reveal Animation
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        const revealOnScroll = () => {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 150;
+            
+            revealElements.forEach((reveal) => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', revealOnScroll);
+        
+        // Navbar blur effect on scroll
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('bg-brand-dark/90');
+                navbar.classList.remove('bg-transparent');
+            } else {
+                navbar.classList.remove('bg-brand-dark/90');
+                navbar.classList.add('bg-transparent');
+            }
+        });
+
+        // Trigger once on load
+        revealOnScroll();
+    </script>
+</body>
+</html>
