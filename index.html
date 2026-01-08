@@ -6,18 +6,14 @@
     <title>Perceptya | Data Strategy & Applied AI</title>
     <meta name="description" content="Turning investments in Tech, Data, and AI into real business results. Premium nearshore execution.">
     
-    <!-- Fonts: Urbanist (Premium Tech feel) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
-    <!-- Custom Config for Brand Colors -->
     <script>
         tailwind.config = {
             theme: {
@@ -71,23 +67,19 @@
         }
 
         @keyframes shine {
-            to {
-                background-position: 200% center;
-            }
+            to { background-position: 200% center; }
         }
         
-        /* Smooth reveal for sections */
-        .reveal {
+        .fade-enter {
             opacity: 0;
-            transform: translateY(30px);
-            transition: all 0.8s ease-out;
+            transform: translateY(10px);
         }
-        .reveal.active {
+        .fade-enter-active {
             opacity: 1;
             transform: translateY(0);
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out;
         }
         
-        /* Language Selector Styles */
         .lang-btn {
             opacity: 0.6;
             transition: all 0.2s;
@@ -97,17 +89,30 @@
             color: #D4AF37;
             font-weight: bold;
         }
+
+        /* Hide all sections by default, JS will toggle them */
+        .spa-view {
+            display: none;
+            padding-top: 80px; /* Offset for fixed navbar */
+            min-height: 100vh;
+        }
+        .spa-view.active {
+            display: block;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
     </style>
 </head>
 <body class="bg-brand-dark text-brand-text antialiased selection:bg-brand-gold selection:text-brand-dark">
 
-    <!-- Navigation -->
     <nav class="fixed w-full z-50 glass-panel border-b border-white/5 transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
-                <!-- Logo -->
-                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="window.scrollTo(0,0)">
-                    <!-- Aperture Logo SVG -->
+                <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
                     <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M50 50L50 10L84.64 30L84.64 70L50 90L15.36 70L15.36 30L50 10" stroke="#D4AF37" stroke-width="2" stroke-opacity="0.5"/>
                         <circle cx="50" cy="50" r="15" stroke="#D4AF37" stroke-width="3"/>
@@ -118,29 +123,25 @@
                     <span class="text-2xl font-bold tracking-tight text-white">PERCEPTYA</span>
                 </div>
                 
-                <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center gap-8">
                     <div class="flex items-baseline space-x-8">
-                        <a href="#manifesto" class="hover:text-brand-gold transition-colors px-3 py-2 text-sm font-medium" data-i18n="nav.manifesto">Manifesto</a>
-                        <a href="#servicos" class="hover:text-brand-gold transition-colors px-3 py-2 text-sm font-medium" data-i18n="nav.services">Services</a>
-                        <a href="#tech" class="hover:text-brand-gold transition-colors px-3 py-2 text-sm font-medium" data-i18n="nav.tech">Technology</a>
+                        <button onclick="navigateTo('manifesto')" class="hover:text-brand-gold transition-colors px-3 py-2 text-sm font-medium" data-i18n="nav.manifesto">Manifesto</button>
+                        <button onclick="navigateTo('services')" class="hover:text-brand-gold transition-colors px-3 py-2 text-sm font-medium" data-i18n="nav.services">Services</button>
+                        <button onclick="navigateTo('tech')" class="hover:text-brand-gold transition-colors px-3 py-2 text-sm font-medium" data-i18n="nav.tech">Technology</button>
                     </div>
                     
-                    <!-- Language Switcher -->
                     <div class="flex items-center gap-3 border-l border-white/10 pl-6">
                         <button onclick="changeLanguage('en')" class="lang-btn active text-sm font-medium" id="btn-en">EN</button>
                         <button onclick="changeLanguage('pt')" class="lang-btn text-sm font-medium" id="btn-pt">PT</button>
                         <button onclick="changeLanguage('es')" class="lang-btn text-sm font-medium" id="btn-es">ES</button>
                     </div>
 
-                    <a href="#contato" class="bg-brand-gold text-brand-dark hover:bg-white transition-all px-5 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-brand-gold/20" data-i18n="nav.cta">
+                    <a href="#contact-section" class="bg-brand-gold text-brand-dark hover:bg-white transition-all px-5 py-2.5 rounded-full text-sm font-bold shadow-lg shadow-brand-gold/20" data-i18n="nav.cta">
                         Talk to an Expert
                     </a>
                 </div>
 
-                <!-- Mobile menu button -->
                 <div class="-mr-2 flex md:hidden gap-4 items-center">
-                    <!-- Mobile Lang Switcher -->
                      <div class="flex items-center gap-2">
                         <button onclick="changeLanguage('en')" class="text-xs font-bold text-brand-gold">EN</button>
                         <button onclick="changeLanguage('pt')" class="text-xs font-bold text-gray-500">PT</button>
@@ -151,256 +152,281 @@
                 </div>
             </div>
         </div>
-        <!-- Mobile Menu -->
         <div class="hidden md:hidden glass-panel border-t border-white/10" id="mobile-menu">
-            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-                <a href="#manifesto" class="block px-3 py-2 rounded-md text-base font-medium hover:text-brand-gold" data-i18n="nav.manifesto">Manifesto</a>
-                <a href="#servicos" class="block px-3 py-2 rounded-md text-base font-medium hover:text-brand-gold" data-i18n="nav.services">Services</a>
-                <a href="#contato" class="block px-3 py-2 mt-4 text-center rounded-md text-base font-bold bg-brand-gold text-brand-dark" data-i18n="nav.cta">Talk to an Expert</a>
-                <div class="flex justify-center gap-4 py-4 border-t border-white/5 mt-4">
-                    <button onclick="changeLanguage('en')" class="text-sm font-bold text-brand-gold">English</button>
-                    <button onclick="changeLanguage('pt')" class="text-sm font-bold text-gray-400">Português</button>
-                    <button onclick="changeLanguage('es')" class="text-sm font-bold text-gray-400">Español</button>
-                </div>
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col">
+                <button onclick="navigateTo('manifesto')" class="text-left block px-3 py-2 rounded-md text-base font-medium hover:text-brand-gold" data-i18n="nav.manifesto">Manifesto</button>
+                <button onclick="navigateTo('services')" class="text-left block px-3 py-2 rounded-md text-base font-medium hover:text-brand-gold" data-i18n="nav.services">Services</button>
+                <button onclick="navigateTo('tech')" class="text-left block px-3 py-2 rounded-md text-base font-medium hover:text-brand-gold" data-i18n="nav.tech">Technology</button>
+                <a href="#contact-section" class="block px-3 py-2 mt-4 text-center rounded-md text-base font-bold bg-brand-gold text-brand-dark" data-i18n="nav.cta">Talk to an Expert</a>
             </div>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        <!-- Background Elements -->
-        <div class="absolute inset-0 z-0">
-            <div class="absolute inset-0 bg-brand-dark opacity-90"></div>
-            <!-- Animated Aperture Effect -->
-            <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-lens-glow rounded-full blur-3xl opacity-40 animate-pulse"></div>
-            <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
-        </div>
+    <main id="main-content">
 
-        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-            <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-gold/30 bg-brand-gold/5 backdrop-blur-sm mb-8 animate-fade-in-up">
-                <span class="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></span>
-                <span class="text-brand-gold text-xs font-bold tracking-widest uppercase">Premium Nearshore Data & AI</span>
-            </div>
-            
-            <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-brand-white tracking-tight mb-8 leading-tight">
-                <span data-i18n="hero.title1">We see what</span> <br>
-                <span class="gold-gradient-text" data-i18n="hero.title2">others miss.</span>
-            </h1>
-            
-            <p class="mt-4 max-w-2xl mx-auto text-xl md:text-2xl text-brand-text font-light leading-relaxed">
-                <span data-i18n="hero.subtitle">Turning investments in Tech, Data, and AI into </span>
-                <strong class="text-white font-semibold" data-i18n="hero.subtitleBold">real business results</strong>.
-                <span data-i18n="hero.subtitleEnd">No fluff, just disciplined execution.</span>
-            </p>
-            
-            <div class="mt-12 flex flex-col sm:flex-row gap-6 justify-center items-center">
-                <a href="#contato" class="group relative px-8 py-4 bg-brand-gold text-brand-dark font-bold text-lg rounded-full overflow-hidden shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] transition-all">
-                    <div class="absolute inset-0 w-full h-full bg-white/20 group-hover:translate-x-full transition-transform duration-500 ease-out -translate-x-full skew-x-12"></div>
-                    <span class="relative flex items-center gap-2">
-                        <span data-i18n="hero.ctaPrimary">Schedule Diagnostic</span>
-                        <i data-lucide="arrow-right" class="w-5 h-5"></i>
-                    </span>
-                </a>
-                <a href="#servicos" class="text-white hover:text-brand-gold font-medium transition-colors flex items-center gap-2">
-                    <span data-i18n="hero.ctaSecondary">Explore Solutions</span> <i data-lucide="chevron-down" class="w-4 h-4"></i>
-                </a>
-            </div>
-        </div>
-        
-        <!-- Scroll Indicator -->
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
-            <i data-lucide="mouse" class="w-6 h-6 text-brand-gold/50"></i>
-        </div>
-    </header>
+        <section id="home" class="spa-view active">
+            <header class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+                <div class="absolute inset-0 z-0">
+                    <div class="absolute inset-0 bg-brand-dark opacity-90"></div>
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-lens-glow rounded-full blur-3xl opacity-40 animate-pulse"></div>
+                    <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
+                </div>
 
-    <!-- Manifesto / Tese Section -->
-    <section id="manifesto" class="py-24 bg-brand-navy relative reveal">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-                <div>
-                    <h2 class="text-brand-gold text-sm font-bold tracking-widest uppercase mb-4" data-i18n="manifesto.label">Our Thesis</h2>
-                    <h3 class="text-4xl md:text-5xl font-bold text-white mb-6">
-                        <span data-i18n="manifesto.title">Execution comes before <br>discourse.</span>
-                    </h3>
-                    <div class="space-y-6 text-lg text-gray-300">
-                        <p>
-                            <span data-i18n="manifesto.p1">Mid and large enterprises don't fail to capture AI value due to lack of tools, but due to lack of orchestration between </span>
-                            <span class="text-white font-semibold" data-i18n="manifesto.p1Bold">Strategy, Engineering, and Execution</span>.
-                        </p>
-                        <p data-i18n="manifesto.p2">
-                            Perceptya exists to fill this gap. Positioned between slide-deck consultancies and generic body shops, we deliver critical senior capacity with a product vision.
-                        </p>
+                <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+                    <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full border border-brand-gold/30 bg-brand-gold/5 backdrop-blur-sm mb-8">
+                        <span class="w-2 h-2 rounded-full bg-brand-gold animate-pulse"></span>
+                        <span class="text-brand-gold text-xs font-bold tracking-widest uppercase">Premium Nearshore Data & AI</span>
                     </div>
                     
-                    <div class="mt-10 grid grid-cols-2 gap-6">
-                        <div class="border-l-2 border-brand-gold pl-4">
-                            <span class="block text-3xl font-bold text-white">Day 1</span>
-                            <span class="text-sm text-gray-400">Nearshore & Global</span>
-                        </div>
-                        <div class="border-l-2 border-brand-gold pl-4">
-                            <span class="block text-3xl font-bold text-white">Vendor</span>
-                            <span class="text-sm text-gray-400">Aware, not locked</span>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="relative">
-                    <!-- Abstract Visualization of Layers -->
-                    <div class="aspect-square rounded-2xl bg-gradient-to-br from-brand-light to-brand-dark border border-white/5 p-8 relative overflow-hidden shadow-2xl group">
-                        <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] opacity-10"></div>
-                        
-                        <!-- Floating Elements representing Data Layers -->
-                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-64 h-64 border border-brand-gold/20 rounded-full group-hover:scale-110 transition-transform duration-700"></div>
-                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-48 h-48 border border-brand-gold/40 rounded-full group-hover:scale-125 transition-transform duration-700 delay-75"></div>
-                        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-32 h-32 bg-brand-gold/10 rounded-full backdrop-blur-md flex items-center justify-center border border-brand-gold group-hover:scale-150 transition-transform duration-700 delay-150">
-                            <i data-lucide="aperture" class="w-12 h-12 text-brand-gold animate-spin-slow"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services Section -->
-    <section id="servicos" class="py-24 bg-brand-dark relative reveal">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="text-center mb-16">
-                <h2 class="text-brand-gold text-sm font-bold tracking-widest uppercase mb-4" data-i18n="services.label">Service Portfolio</h2>
-                <h3 class="text-4xl font-bold text-white" data-i18n="services.title">The G1-G4 Model</h3>
-                <p class="mt-4 text-xl text-gray-400 max-w-2xl mx-auto" data-i18n="services.subtitle">A structured journey from diagnosis to continuous AI operation.</p>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <!-- G1 Card -->
-                <div class="group glass-panel p-8 rounded-2xl hover:border-brand-gold/50 transition-all hover:-translate-y-2">
-                    <div class="w-12 h-12 rounded-lg bg-brand-navy border border-brand-gold/20 flex items-center justify-center mb-6 group-hover:bg-brand-gold group-hover:text-brand-dark transition-colors">
-                        <span class="font-bold text-xl">G1</span>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-2">Diagnostic</h4>
-                    <p class="text-sm text-gray-400 mb-4">4-6 Weeks</p>
-                    <ul class="space-y-2 text-gray-300 text-sm">
-                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> <span data-i18n="services.g1.p1">Data Maturity</span></li>
-                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> <span data-i18n="services.g1.p2">To-Be Architecture</span></li>
-                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> <span data-i18n="services.g1.p3">Business Case ROI</span></li>
-                    </ul>
-                </div>
-
-                <!-- G2 Card -->
-                <div class="group glass-panel p-8 rounded-2xl hover:border-brand-gold/50 transition-all hover:-translate-y-2">
-                    <div class="w-12 h-12 rounded-lg bg-brand-navy border border-brand-gold/20 flex items-center justify-center mb-6 group-hover:bg-brand-gold group-hover:text-brand-dark transition-colors">
-                        <span class="font-bold text-xl">G2</span>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-2">Modernization</h4>
-                    <p class="text-sm text-gray-400 mb-4">Build & Migrate</p>
-                    <ul class="space-y-2 text-gray-300 text-sm">
-                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> Data Mesh & Lakes</li>
-                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> <span data-i18n="services.g2.p2">Medallion Governance</span></li>
-                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> <span data-i18n="services.g2.p3">BigQuery Migration</span></li>
-                    </ul>
-                </div>
-
-                <!-- G3 Card -->
-                <div class="group glass-panel p-8 rounded-2xl hover:border-brand-gold/50 transition-all hover:-translate-y-2 relative overflow-hidden">
-                    <div class="absolute -right-10 -top-10 w-24 h-24 bg-brand-gold/10 rounded-full blur-xl"></div>
-                    <div class="w-12 h-12 rounded-lg bg-brand-navy border border-brand-gold/20 flex items-center justify-center mb-6 group-hover:bg-brand-gold group-hover:text-brand-dark transition-colors">
-                        <span class="font-bold text-xl">G3</span>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-2">Applied AI</h4>
-                    <p class="text-sm text-gray-400 mb-4">Innovation</p>
-                    <ul class="space-y-2 text-gray-300 text-sm">
-                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> GenAI & RAG</li>
-                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> Vertex AI Agents</li>
-                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> <span data-i18n="services.g3.p3">Intelligent Automation</span></li>
-                    </ul>
-                </div>
-
-                <!-- G4 Card -->
-                <div class="group glass-panel p-8 rounded-2xl hover:border-brand-gold/50 transition-all hover:-translate-y-2 border-brand-gold/20 border">
-                    <div class="w-12 h-12 rounded-lg bg-brand-navy border border-brand-gold/20 flex items-center justify-center mb-6 group-hover:bg-brand-gold group-hover:text-brand-dark transition-colors">
-                        <span class="font-bold text-xl">G4</span>
-                    </div>
-                    <h4 class="text-xl font-bold text-white mb-2">Embedded Pods</h4>
-                    <p class="text-sm text-gray-400 mb-4">Scale & Run</p>
-                    <ul class="space-y-2 text-gray-300 text-sm">
-                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> <span data-i18n="services.g4.p1">Dedicated Squads</span></li>
-                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> <span data-i18n="services.g4.p2">Continuous Evolution</span></li>
-                        <li class="flex items-start gap-2"><i data-lucide="check" class="w-4 h-4 text-brand-gold mt-0.5"></i> <span data-i18n="services.g4.p3">Nearshore Mgmt</span></li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Technology Section -->
-    <section id="tech" class="py-24 bg-brand-navy border-y border-white/5 reveal">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex flex-col md:flex-row gap-12 items-center">
-                <div class="md:w-1/2">
-                    <h2 class="text-brand-gold text-sm font-bold tracking-widest uppercase mb-4" data-i18n="tech.label">Tech Stack & Expertise</h2>
-                    <h3 class="text-3xl md:text-4xl font-bold text-white mb-6" data-i18n="tech.title">Modern Engineering <br>and Cloud Native.</h3>
-                    <p class="text-gray-300 mb-6" data-i18n="tech.desc">
-                        Born in the cloud, we are specialists in the modern data ecosystem. Our reference architecture ensures scale, security, and governance from day zero.
+                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-brand-white tracking-tight mb-8 leading-tight">
+                        <span data-i18n="hero.title1">We see what</span> <br>
+                        <span class="gold-gradient-text" data-i18n="hero.title2">others miss.</span>
+                    </h1>
+                    
+                    <p class="mt-4 max-w-2xl mx-auto text-xl md:text-2xl text-brand-text font-light leading-relaxed">
+                        <span data-i18n="hero.subtitle">Turning investments in Tech, Data, and AI into </span>
+                        <strong class="text-white font-semibold" data-i18n="hero.subtitleBold">real business results</strong>.
+                        <span data-i18n="hero.subtitleEnd">Day 1 Impact. Tech Agnostic.</span>
                     </p>
                     
-                    <div class="grid grid-cols-2 gap-4">
-                        <div class="flex items-center gap-3 p-3 bg-brand-dark rounded-lg border border-white/5">
-                            <i data-lucide="database" class="text-blue-400"></i>
-                            <span class="text-sm font-semibold text-white">BigQuery & Lakehouse</span>
+                    <div class="mt-12 flex flex-col sm:flex-row gap-6 justify-center items-center">
+                        <button onclick="navigateTo('services')" class="group relative px-8 py-4 bg-brand-gold text-brand-dark font-bold text-lg rounded-full overflow-hidden shadow-[0_0_20px_rgba(212,175,55,0.3)] hover:shadow-[0_0_30px_rgba(212,175,55,0.5)] transition-all">
+                            <span class="relative flex items-center gap-2">
+                                <span data-i18n="hero.ctaPrimary">Schedule Diagnostic</span>
+                                <i data-lucide="arrow-right" class="w-5 h-5"></i>
+                            </span>
+                        </button>
+                        <button onclick="navigateTo('manifesto')" class="text-white hover:text-brand-gold font-medium transition-colors flex items-center gap-2">
+                            <span data-i18n="hero.ctaSecondary">Read our Manifesto</span> <i data-lucide="chevron-right" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <section class="py-24 bg-brand-navy relative">
+                <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                        <div>
+                            <h2 class="text-brand-gold text-sm font-bold tracking-widest uppercase mb-4" data-i18n="thesis.label">Our Focus</h2>
+                            <h3 class="text-3xl md:text-4xl font-bold text-white mb-6" data-i18n="thesis.title">Understanding Real Pain. <br>Delivering Value.</h3>
+                            <div class="space-y-6 text-lg text-gray-300">
+                                <p data-i18n="thesis.p1">
+                                    We don't just deploy infrastructure. We start by identifying the **latent value opportunities** where technology actually propels the business forward.
+                                </p>
+                                <p data-i18n="thesis.p2">
+                                    We are <strong class="text-brand-gold">Tech Agnostic</strong>. Whether Open Source or Proprietary, AWS, Azure, or GCP—we use what solves the problem best.
+                                </p>
+                            </div>
+                            <div class="mt-8">
+                                <button onclick="navigateTo('manifesto')" class="text-brand-gold hover:text-white font-bold inline-flex items-center gap-2">
+                                    <span data-i18n="thesis.link">See full Manifesto</span> <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                                </button>
+                            </div>
                         </div>
-                        <div class="flex items-center gap-3 p-3 bg-brand-dark rounded-lg border border-white/5">
-                            <i data-lucide="cpu" class="text-purple-400"></i>
-                            <span class="text-sm font-semibold text-white">Vertex AI & Gemini</span>
-                        </div>
-                        <div class="flex items-center gap-3 p-3 bg-brand-dark rounded-lg border border-white/5">
-                            <i data-lucide="layout-grid" class="text-orange-400"></i>
-                            <span class="text-sm font-semibold text-white">Data Mesh Architecture</span>
-                        </div>
-                        <div class="flex items-center gap-3 p-3 bg-brand-dark rounded-lg border border-white/5">
-                            <i data-lucide="shield-check" class="text-green-400"></i>
-                            <span class="text-sm font-semibold text-white">GCP DLP & Governance</span>
-                        </div>
-                        <div class="flex items-center gap-3 p-3 bg-brand-dark rounded-lg border border-white/5">
-                            <i data-lucide="workflow" class="text-cyan-400"></i>
-                            <span class="text-sm font-semibold text-white">Dataform & Dataflow</span>
-                        </div>
-                         <div class="flex items-center gap-3 p-3 bg-brand-dark rounded-lg border border-white/5">
-                            <i data-lucide="git-branch" class="text-gray-400"></i>
-                            <span class="text-sm font-semibold text-white">Terraform & CI/CD</span>
+                        <div class="relative bg-brand-light p-8 rounded-2xl border border-white/5">
+                            <div class="grid grid-cols-2 gap-8">
+                                <div>
+                                    <div class="text-3xl font-bold text-white mb-2">Day 1</div>
+                                    <div class="text-sm text-gray-400" data-i18n="thesis.stat1">Impact Generation</div>
+                                </div>
+                                <div>
+                                    <div class="text-3xl font-bold text-white mb-2">100%</div>
+                                    <div class="text-sm text-gray-400" data-i18n="thesis.stat2">Vendor Agnostic</div>
+                                </div>
+                                <div>
+                                    <div class="text-3xl font-bold text-white mb-2">Nearshore</div>
+                                    <div class="text-sm text-gray-400" data-i18n="thesis.stat3">Global Talent</div>
+                                </div>
+                                <div>
+                                    <div class="text-3xl font-bold text-white mb-2">Senior</div>
+                                    <div class="text-sm text-gray-400" data-i18n="thesis.stat4">Expert Teams</div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="md:w-1/2 relative">
-                    <!-- Tech Visualization -->
-                    <div class="bg-brand-dark p-8 rounded-2xl border border-white/10 shadow-2xl">
-                        <div class="space-y-4 font-mono text-sm">
-                            <div class="flex items-center gap-2 text-gray-500">
-                                <span class="text-green-500">$</span> terraform apply -auto-approve
+            </section>
+
+            <section class="py-20 bg-brand-dark border-t border-white/5">
+                <div class="max-w-7xl mx-auto px-4 text-center">
+                    <h2 class="text-3xl font-bold text-white mb-6" data-i18n="nearshore.title">World-Class Nearshore Execution</h2>
+                    <p class="max-w-3xl mx-auto text-gray-400 text-lg mb-10" data-i18n="nearshore.subtitle">
+                        Our teams are not just remote hands; they are senior engineers and architects experienced in global projects. 
+                        We bridge the gap with compatible timezones, fluent English, and deep cultural alignment.
+                    </p>
+                    <div class="flex justify-center gap-8 text-gray-500">
+                        <div class="flex items-center gap-2"><i data-lucide="globe" class="text-brand-gold"></i> US/Canada/LATAM</div>
+                        <div class="flex items-center gap-2"><i data-lucide="clock" class="text-brand-gold"></i> Timezone Aligned</div>
+                        <div class="flex items-center gap-2"><i data-lucide="message-square" class="text-brand-gold"></i> Fluent English</div>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <section id="manifesto" class="spa-view bg-brand-navy">
+            <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+                <div class="text-center mb-16">
+                    <span class="text-brand-gold font-bold tracking-widest uppercase mb-4 block" data-i18n="manifesto.header">Our Vision</span>
+                    <h1 class="text-5xl md:text-6xl font-bold text-white mb-8" data-i18n="manifesto.headline">Data as an Activator. <br>Tech as an Enabler.</h1>
+                    <div class="w-24 h-1 bg-brand-gold mx-auto rounded-full"></div>
+                </div>
+
+                <div class="space-y-12 text-xl leading-relaxed text-gray-300">
+                    <p data-i18n="manifesto.body1">
+                        We believe that data shouldn't just be stored; it should <strong>activate new business</strong>. In a world drowning in information, the winners are those who use data to break barriers and enable new opportunities.
+                    </p>
+                    
+                    <div class="bg-brand-dark p-8 rounded-xl border-l-4 border-brand-gold shadow-lg my-12">
+                        <p class="text-white italic text-2xl" data-i18n="manifesto.quote">
+                            "Technology must be a natural enabler of strategy, never a risk factor."
+                        </p>
+                    </div>
+
+                    <p data-i18n="manifesto.body2">
+                        Too many companies view tech as a cost center or a liability. We flip the script. We see technology as the skeletal structure that allows the business muscle to flex. 
+                    </p>
+                    <p data-i18n="manifesto.body3">
+                        Our manifesto is simple: <strong>Understand the pain first.</strong> Build only what creates value. Use Open Source where it gives freedom, and Proprietary Cloud tools where they give speed. Be agnostic in tools, but dogmatic in quality.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section id="services" class="spa-view bg-brand-dark">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+                <div class="text-center mb-16">
+                    <h2 class="text-brand-gold font-bold tracking-widest uppercase mb-4" data-i18n="services.pageTitle">Services & Solutions</h2>
+                    <h1 class="text-4xl md:text-5xl font-bold text-white mb-6" data-i18n="services.modelTitle">The G1-G4 Model</h1>
+                    <p class="text-gray-400 max-w-2xl mx-auto" data-i18n="services.modelDesc">A structured evolution from discovering value to scaling AI operations.</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+                    <div class="glass-panel p-8 rounded-2xl border-t-4 border-brand-gold hover:-translate-y-2 transition-transform">
+                        <div class="text-6xl font-bold text-brand-navy mb-4 opacity-50 absolute right-4 top-4">G1</div>
+                        <h3 class="text-2xl font-bold text-white mb-2" data-i18n="g1.title">Value Diagnosis</h3>
+                        <p class="text-brand-gold text-sm font-bold mb-4" data-i18n="g1.duration">1-2 Weeks Sprint</p>
+                        <p class="text-gray-400 text-sm mb-4" data-i18n="g1.desc">
+                            Focus on real pain points and latent opportunities. We analyze structural tech and business plans to define where data creates services.
+                        </p>
+                    </div>
+                     <div class="glass-panel p-8 rounded-2xl border-t-4 border-gray-600 hover:-translate-y-2 transition-transform">
+                        <div class="text-6xl font-bold text-brand-navy mb-4 opacity-50 absolute right-4 top-4">G2</div>
+                        <h3 class="text-2xl font-bold text-white mb-2" data-i18n="g2.title">Platform Modernization</h3>
+                        <p class="text-gray-500 text-sm font-bold mb-4">Build & Structure</p>
+                        <p class="text-gray-400 text-sm mb-4" data-i18n="g2.desc">
+                            Implementation of Lakehouse architectures. Treating Data as a Platform and Data as a Product. scalable and governed foundations.
+                        </p>
+                    </div>
+                     <div class="glass-panel p-8 rounded-2xl border-t-4 border-blue-500 hover:-translate-y-2 transition-transform">
+                        <div class="text-6xl font-bold text-brand-navy mb-4 opacity-50 absolute right-4 top-4">G3</div>
+                        <h3 class="text-2xl font-bold text-white mb-2" data-i18n="g3.title">Applied & Agentic AI</h3>
+                        <p class="text-blue-400 text-sm font-bold mb-4">Innovation</p>
+                        <p class="text-gray-400 text-sm mb-4" data-i18n="g3.desc">
+                            Moving beyond chatbots. Implementing GenAI and Autonomous Agents that execute complex workflows and drive automation.
+                        </p>
+                    </div>
+                     <div class="glass-panel p-8 rounded-2xl border-t-4 border-green-500 hover:-translate-y-2 transition-transform">
+                        <div class="text-6xl font-bold text-brand-navy mb-4 opacity-50 absolute right-4 top-4">G4</div>
+                        <h3 class="text-2xl font-bold text-white mb-2" data-i18n="g4.title">Dedicated PODs</h3>
+                        <p class="text-green-400 text-sm font-bold mb-4">Scale & Run</p>
+                        <p class="text-gray-400 text-sm mb-4" data-i18n="g4.desc">
+                            High-performance Nearshore squads dedicated to your product evolution. Continuous delivery and optimization.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-brand-navy p-8 rounded-xl border border-white/5">
+                        <i data-lucide="flask-conical" class="w-10 h-10 text-brand-gold mb-4"></i>
+                        <h3 class="text-xl font-bold text-white mb-3" data-i18n="spec.poc.title">PoC & MVP Factory</h3>
+                        <p class="text-gray-400" data-i18n="spec.poc.desc">
+                            Rapid prototyping for Data as a Service (DaaS) and Platform Products. We validate hypotheses fast: fail fast or scale faster. 
+                        </p>
+                    </div>
+                    <div class="bg-brand-navy p-8 rounded-xl border border-white/5">
+                        <i data-lucide="zap" class="w-10 h-10 text-brand-gold mb-4"></i>
+                        <h3 class="text-xl font-bold text-white mb-3" data-i18n="spec.enable.title">Tech Enablement</h3>
+                        <p class="text-gray-400" data-i18n="spec.enable.desc">
+                            Structuring technology to boost business. We don't just build; we enable your internal teams with frameworks, best practices, and automated governance.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="tech" class="spa-view bg-brand-navy">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+                <div class="flex flex-col md:flex-row gap-16">
+                    <div class="md:w-1/2">
+                        <h2 class="text-brand-gold font-bold tracking-widest uppercase mb-4" data-i18n="tech.pageLabel">Our Expertise</h2>
+                        <h1 class="text-4xl md:text-5xl font-bold text-white mb-8" data-i18n="tech.mainTitle">Tech Agnostic. <br>Architecture First.</h1>
+                        
+                        <div class="space-y-8">
+                            <div class="flex gap-4">
+                                <div class="w-12 h-12 rounded-full bg-brand-dark flex items-center justify-center border border-brand-gold text-brand-gold shrink-0">1</div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-white" data-i18n="tech.mesh.title">Data Mesh & Products</h3>
+                                    <p class="text-gray-400 mt-2" data-i18n="tech.mesh.desc">Decentralized data ownership. Treating data domains as products with defined SLAs and consumers.</p>
+                                </div>
                             </div>
-                            <div class="text-gray-300 pl-4">
-                                <span class="text-purple-400">module.data_mesh</span>: Creating...<br>
-                                <span class="text-blue-400">resource.bigquery_dataset.gold_layer</span>: Created [id=projects/perceptya/datasets/gold]<br>
-                                <span class="text-blue-400">resource.vertex_ai_endpoint.genai_agent</span>: Created [id=123456789]<br>
-                                <span class="text-green-400">Apply complete! Resources: 24 added, 0 changed, 0 destroyed.</span>
+                            <div class="flex gap-4">
+                                <div class="w-12 h-12 rounded-full bg-brand-dark flex items-center justify-center border border-brand-gold text-brand-gold shrink-0">2</div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-white" data-i18n="tech.cloud.title">Multi-Cloud & GCP Focus</h3>
+                                    <p class="text-gray-400 mt-2" data-i18n="tech.cloud.desc">Deep expertise in Google Cloud (BigQuery, Vertex AI), but fully capable in AWS, Azure, and Open Source stacks.</p>
+                                </div>
                             </div>
-                            <div class="h-px bg-white/10 my-4"></div>
-                            <div class="flex items-center gap-2 text-white font-bold">
-                                <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
-                                System Operational: All Data Domains Active
+                            <div class="flex gap-4">
+                                <div class="w-12 h-12 rounded-full bg-brand-dark flex items-center justify-center border border-brand-gold text-brand-gold shrink-0">3</div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-white" data-i18n="tech.modern.title">Modern Stack</h3>
+                                    <p class="text-gray-400 mt-2" data-i18n="tech.modern.desc">Terraform for IaC, dbt/Dataform for transformation, Airflow/Prefect for orchestration. We use modern standards.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="md:w-1/2">
+                        <div class="bg-brand-dark p-6 rounded-xl border border-white/10 shadow-2xl font-mono text-sm h-full">
+                            <div class="flex gap-2 mb-4">
+                                <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                                <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="space-y-2 text-gray-300">
+                                <p><span class="text-green-400">user@perceptya:~$</span> check-architecture --mode=agnostic</p>
+                                <p class="text-blue-300">Analysis in progress...</p>
+                                <br>
+                                <p>> Checking Cloud Provider...</p>
+                                <p class="text-gray-500">  [OK] GCP (Primary)</p>
+                                <p class="text-gray-500">  [OK] AWS (Connected)</p>
+                                <p class="text-gray-500">  [OK] Open Source (K8s/Spark)</p>
+                                <br>
+                                <p>> Checking Data Strategy...</p>
+                                <p class="text-gray-500">  [OK] Data as a Product</p>
+                                <p class="text-gray-500">  [OK] Mesh Topology</p>
+                                <br>
+                                <p>> Validating AI Core...</p>
+                                <p class="text-gray-500">  [OK] Vertex AI Agents</p>
+                                <p class="text-gray-500">  [OK] LLM Ops Pipeline</p>
+                                <br>
+                                <p class="text-green-400">SUCCESS: Architecture optimized for Business Value.</p>
+                                <div class="animate-pulse">_</div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Footer / Contact -->
-    <footer id="contato" class="bg-black pt-24 pb-12 border-t border-brand-gold/20">
+    </main>
+
+    <footer id="contact-section" class="bg-black pt-24 pb-12 border-t border-brand-gold/20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
                 <div class="col-span-1 lg:col-span-2">
                     <div class="flex items-center gap-2 mb-6">
-                         <svg width="30" height="30" viewBox="0 0 100 100" fill="none">
+                        <svg width="30" height="30" viewBox="0 0 100 100" fill="none">
                             <circle cx="50" cy="50" r="45" stroke="#D4AF37" stroke-width="2"/>
                             <path d="M50 20L65 45H35L50 20Z" fill="#D4AF37"/>
                         </svg>
@@ -409,34 +435,12 @@
                     <p class="text-gray-400 max-w-sm mb-6" data-i18n="footer.about">
                         Premium digital execution, data, and AI firm in nearshore model. Focused on solving critical product and technology bottlenecks.
                     </p>
-                    <div class="flex gap-4">
-                        <a href="#" class="w-10 h-10 rounded-full bg-brand-light flex items-center justify-center text-brand-gold hover:bg-brand-gold hover:text-brand-dark transition-colors">
-                            <i data-lucide="linkedin" class="w-5 h-5"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-brand-light flex items-center justify-center text-brand-gold hover:bg-brand-gold hover:text-brand-dark transition-colors">
-                            <i data-lucide="instagram" class="w-5 h-5"></i>
-                        </a>
-                        <a href="#" class="w-10 h-10 rounded-full bg-brand-light flex items-center justify-center text-brand-gold hover:bg-brand-gold hover:text-brand-dark transition-colors">
-                            <i data-lucide="mail" class="w-5 h-5"></i>
-                        </a>
-                    </div>
                 </div>
                 
                 <div>
-                    <h4 class="text-white font-bold mb-6" data-i18n="footer.servicesTitle">Services</h4>
-                    <ul class="space-y-4 text-gray-400 text-sm">
-                        <li><a href="#" class="hover:text-brand-gold transition-colors">Data Diagnostic</a></li>
-                        <li><a href="#" class="hover:text-brand-gold transition-colors">Platform Modernization</a></li>
-                        <li><a href="#" class="hover:text-brand-gold transition-colors">Applied AI & GenAI</a></li>
-                        <li><a href="#" class="hover:text-brand-gold transition-colors">Dedicated Pods</a></li>
-                    </ul>
-                </div>
-
-                <div>
                     <h4 class="text-white font-bold mb-6" data-i18n="footer.contactTitle">Contact</h4>
                     <ul class="space-y-4 text-gray-400 text-sm">
-                        <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-brand-gold"></i> São Paulo, SP</li>
-                        <li class="flex items-center gap-2"><i data-lucide="globe" class="w-4 h-4 text-brand-gold"></i> Nearshore Operations</li>
+                        <li class="flex items-center gap-2"><i data-lucide="map-pin" class="w-4 h-4 text-brand-gold"></i> São Paulo, SP / Remote Global</li>
                         <li class="flex items-center gap-2"><i data-lucide="mail" class="w-4 h-4 text-brand-gold"></i> hello@perceptya.com</li>
                     </ul>
                     <a href="mailto:hello@perceptya.com" class="mt-6 inline-block px-6 py-3 border border-brand-gold text-brand-gold font-bold text-sm rounded hover:bg-brand-gold hover:text-brand-dark transition-colors" data-i18n="footer.contactBtn">
@@ -447,10 +451,6 @@
             
             <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-500">
                 <p data-i18n="footer.rights">&copy; 2024 Perceptya. All rights reserved.</p>
-                <div class="flex gap-6 mt-4 md:mt-0">
-                    <a href="#" class="hover:text-white" data-i18n="footer.privacy">Privacy</a>
-                    <a href="#" class="hover:text-white" data-i18n="footer.terms">Terms</a>
-                </div>
             </div>
         </div>
     </footer>
@@ -459,7 +459,25 @@
         // Initialize Lucide Icons
         lucide.createIcons();
 
-        // Translation Dictionary
+        // SPA Navigation Logic
+        function navigateTo(viewId) {
+            // Hide all views
+            document.querySelectorAll('.spa-view').forEach(view => {
+                view.classList.remove('active');
+            });
+            
+            // Show selected view
+            const selectedView = document.getElementById(viewId);
+            if(selectedView) {
+                selectedView.classList.add('active');
+                window.scrollTo(0,0);
+            }
+            
+            // Close mobile menu if open
+            document.getElementById('mobile-menu').classList.add('hidden');
+        }
+
+        // Translation Logic
         const translations = {
             en: {
                 "nav.manifesto": "Manifesto",
@@ -470,36 +488,54 @@
                 "hero.title2": "others miss.",
                 "hero.subtitle": "Turning investments in Tech, Data, and AI into ",
                 "hero.subtitleBold": "real business results",
-                "hero.subtitleEnd": ". No fluff, just disciplined execution.",
+                "hero.subtitleEnd": ". Day 1 Impact. Tech Agnostic.",
                 "hero.ctaPrimary": "Schedule Diagnostic",
-                "hero.ctaSecondary": "Explore Solutions",
-                "manifesto.label": "Our Thesis",
-                "manifesto.title": "Execution comes before <br>discourse.",
-                "manifesto.p1": "Mid and large enterprises don't fail to capture AI value due to lack of tools, but due to lack of orchestration between ",
-                "manifesto.p1Bold": "Strategy, Engineering, and Execution",
-                "manifesto.p2": "Perceptya exists to fill this gap. Positioned between slide-deck consultancies and generic body shops, we deliver critical senior capacity with a product vision.",
-                "services.label": "Service Portfolio",
-                "services.title": "The G1-G4 Model",
-                "services.subtitle": "A structured journey from diagnosis to continuous AI operation.",
-                "services.g1.p1": "Data Maturity",
-                "services.g1.p2": "To-Be Architecture",
-                "services.g1.p3": "Business Case ROI",
-                "services.g2.p2": "Medallion Governance",
-                "services.g2.p3": "BigQuery Migration",
-                "services.g3.p3": "Intelligent Automation",
-                "services.g4.p1": "Dedicated Squads",
-                "services.g4.p2": "Continuous Evolution",
-                "services.g4.p3": "Nearshore Mgmt",
-                "tech.label": "Tech Stack & Expertise",
-                "tech.title": "Modern Engineering <br>and Cloud Native.",
-                "tech.desc": "Born in the cloud, we are specialists in the modern data ecosystem. Our reference architecture ensures scale, security, and governance from day zero.",
+                "hero.ctaSecondary": "Read our Manifesto",
+                "thesis.label": "Our Focus",
+                "thesis.title": "Understanding Real Pain. <br>Delivering Value.",
+                "thesis.p1": "We don't just deploy infrastructure. We start by identifying the **latent value opportunities** where technology actually propels the business forward.",
+                "thesis.p2": "We are <strong class='text-brand-gold'>Tech Agnostic</strong>. Whether Open Source or Proprietary, AWS, Azure, or GCP—we use what solves the problem best.",
+                "thesis.link": "See full Manifesto",
+                "thesis.stat1": "Impact Generation",
+                "thesis.stat2": "Vendor Agnostic",
+                "thesis.stat3": "Global Talent",
+                "thesis.stat4": "Expert Teams",
+                "nearshore.title": "World-Class Nearshore Execution",
+                "nearshore.subtitle": "Our teams are not just remote hands; they are senior engineers and architects experienced in global projects. We bridge the gap with compatible timezones, fluent English, and deep cultural alignment.",
+                "manifesto.header": "Our Vision",
+                "manifesto.headline": "Data as an Activator. <br>Tech as an Enabler.",
+                "manifesto.body1": "We believe that data shouldn't just be stored; it should <strong>activate new business</strong>. In a world drowning in information, the winners are those who use data to break barriers and enable new opportunities.",
+                "manifesto.quote": "\"Technology must be a natural enabler of strategy, never a risk factor.\"",
+                "manifesto.body2": "Too many companies view tech as a cost center or a liability. We flip the script. We see technology as the skeletal structure that allows the business muscle to flex.",
+                "manifesto.body3": "Our manifesto is simple: <strong>Understand the pain first.</strong> Build only what creates value. Use Open Source where it gives freedom, and Proprietary Cloud tools where they give speed. Be agnostic in tools, but dogmatic in quality.",
+                "services.pageTitle": "Services & Solutions",
+                "services.modelTitle": "The G1-G4 Model",
+                "services.modelDesc": "A structured evolution from discovering value to scaling AI operations.",
+                "g1.title": "Value Diagnosis",
+                "g1.duration": "1-2 Weeks Sprint",
+                "g1.desc": "Focus on real pain points and latent opportunities. We analyze structural tech and business plans to define where data creates services.",
+                "g2.title": "Platform Modernization",
+                "g2.desc": "Implementation of Lakehouse architectures. Treating Data as a Platform and Data as a Product. Scalable and governed foundations.",
+                "g3.title": "Applied & Agentic AI",
+                "g3.desc": "Moving beyond chatbots. Implementing GenAI and Autonomous Agents that execute complex workflows and drive automation.",
+                "g4.title": "Dedicated PODs",
+                "g4.desc": "High-performance Nearshore squads dedicated to your product evolution. Continuous delivery and optimization.",
+                "spec.poc.title": "PoC & MVP Factory",
+                "spec.poc.desc": "Rapid prototyping for Data as a Service (DaaS) and Platform Products. We validate hypotheses fast: fail fast or scale faster.",
+                "spec.enable.title": "Tech Enablement",
+                "spec.enable.desc": "Structuring technology to boost business. We don't just build; we enable your internal teams with frameworks, best practices, and automated governance.",
+                "tech.pageLabel": "Our Expertise",
+                "tech.mainTitle": "Tech Agnostic. <br>Architecture First.",
+                "tech.mesh.title": "Data Mesh & Products",
+                "tech.mesh.desc": "Decentralized data ownership. Treating data domains as products with defined SLAs and consumers.",
+                "tech.cloud.title": "Multi-Cloud & GCP Focus",
+                "tech.cloud.desc": "Deep expertise in Google Cloud (BigQuery, Vertex AI), but fully capable in AWS, Azure, and Open Source stacks.",
+                "tech.modern.title": "Modern Stack",
+                "tech.modern.desc": "Terraform for IaC, dbt/Dataform for transformation, Airflow/Prefect for orchestration. We use modern standards.",
                 "footer.about": "Premium digital execution, data, and AI firm in nearshore model. Focused on solving critical product and technology bottlenecks.",
-                "footer.servicesTitle": "Services",
                 "footer.contactTitle": "Contact",
                 "footer.contactBtn": "Start Conversation",
-                "footer.rights": "&copy; 2024 Perceptya. All rights reserved.",
-                "footer.privacy": "Privacy",
-                "footer.terms": "Terms"
+                "footer.rights": "&copy; 2024 Perceptya. All rights reserved."
             },
             pt: {
                 "nav.manifesto": "Manifesto",
@@ -510,36 +546,54 @@
                 "hero.title2": "os outros não veem.",
                 "hero.subtitle": "Transformando investimentos em Tecnologia, Dados e IA em ",
                 "hero.subtitleBold": "resultado real de negócio",
-                "hero.subtitleEnd": ". Sem discurso, apenas execução disciplinada.",
+                "hero.subtitleEnd": ". Impacto desde o Dia 1. Tech Agnostic.",
                 "hero.ctaPrimary": "Agendar Diagnóstico",
-                "hero.ctaSecondary": "Explorar Soluções",
-                "manifesto.label": "Nossa Tese",
-                "manifesto.title": "Execução vem antes <br>do discurso.",
-                "manifesto.p1": "Empresas médias e grandes não falham em capturar valor de IA por falta de ferramentas, mas pela ausência de orquestração entre ",
-                "manifesto.p1Bold": "Estratégia, Engenharia e Execução",
-                "manifesto.p2": "A Perceptya existe para preencher esse vácuo. Posicionada entre as consultorias de slide e os body shops genéricos, entregamos capacidade sênior crítica com visão de produto.",
-                "services.label": "Portfólio de Serviços",
-                "services.title": "O Modelo G1-G4",
-                "services.subtitle": "Uma jornada estruturada desde o diagnóstico até a operação contínua de IA.",
-                "services.g1.p1": "Maturidade de Dados",
-                "services.g1.p2": "Arquitetura To-Be",
-                "services.g1.p3": "Business Case ROI",
-                "services.g2.p2": "Governança Medallion",
-                "services.g2.p3": "Migração BigQuery",
-                "services.g3.p3": "Automação Inteligente",
-                "services.g4.p1": "Squads Dedicados",
-                "services.g4.p2": "Evolução Contínua",
-                "services.g4.p3": "Gestão Nearshore",
-                "tech.label": "Tech Stack & Expertise",
-                "tech.title": "Engenharia Moderna <br>e Cloud Native.",
-                "tech.desc": "Nascemos na nuvem e somos especialistas no ecossistema de dados moderno. Nossa arquitetura de referência garante escala, segurança e governança desde o dia zero.",
-                "footer.about": "Empresa premium de execução digital, dados e IA em modelo nearshore. Focada em resolver gargalos críticos de produto e tecnologia.",
-                "footer.servicesTitle": "Serviços",
+                "hero.ctaSecondary": "Ler Manifesto",
+                "thesis.label": "Nosso Foco",
+                "thesis.title": "Entender a Dor Real. <br>Entregar Valor.",
+                "thesis.p1": "Não implantamos apenas infraestrutura. Começamos identificando as **oportunidades latentes de valor** onde a tecnologia realmente impulsiona o negócio.",
+                "thesis.p2": "Somos <strong class='text-brand-gold'>Tech Agnostic</strong>. Seja Open Source ou Proprietário, AWS, Azure ou GCP — usamos o que resolve o problema.",
+                "thesis.link": "Ver Manifesto Completo",
+                "thesis.stat1": "Geração de Impacto",
+                "thesis.stat2": "Vendor Agnostic",
+                "thesis.stat3": "Talento Global",
+                "thesis.stat4": "Times Experts",
+                "nearshore.title": "Execução Nearshore de Classe Mundial",
+                "nearshore.subtitle": "Nossos times não são apenas braços remotos; são engenheiros e arquitetos seniores experientes em projetos globais. Unimos o fuso horário compatível com inglês fluente e alinhamento cultural profundo.",
+                "manifesto.header": "Nossa Visão",
+                "manifesto.headline": "Dados como Ativador. <br>Tech como Habilitador.",
+                "manifesto.body1": "Acreditamos que dados não devem apenas ser armazenados; devem <strong>ativar novos negócios</strong>. Em um mundo afogado em informação, vencem aqueles que usam dados para quebrar barreiras.",
+                "manifesto.quote": "\"A tecnologia deve ser um habilitador natural da estratégia, nunca um fator de risco.\"",
+                "manifesto.body2": "Muitas empresas veem tech como custo ou passivo. Nós invertemos o script. Vemos a tecnologia como a estrutura que permite ao músculo do negócio flexionar.",
+                "manifesto.body3": "Nosso manifesto é simples: <strong>Entenda a dor primeiro.</strong> Construa apenas o que cria valor. Seja agnóstico em ferramentas, mas dogmático na qualidade.",
+                "services.pageTitle": "Serviços e Soluções",
+                "services.modelTitle": "O Modelo G1-G4",
+                "services.modelDesc": "Uma evolução estruturada desde a descoberta de valor até a operação escalável de IA.",
+                "g1.title": "Diagnóstico de Valor",
+                "g1.duration": "Sprint de 1-2 Semanas",
+                "g1.desc": "Foco em dores reais e oportunidades latentes. Analisamos tecnologia estruturante e planos de negócio para definir onde dados criam serviços.",
+                "g2.title": "Modernização de Plataforma",
+                "g2.desc": "Implementação de arquiteturas Lakehouse. Tratando Dados como Plataforma e Dados como Produto. Fundações escaláveis e governadas.",
+                "g3.title": "IA Aplicada & Agêntica",
+                "g3.desc": "Indo além dos chatbots. Implementando GenAI e Agentes Autônomos que executam fluxos de trabalho complexos e impulsionam automação.",
+                "g4.title": "PODs Dedicados",
+                "g4.desc": "Squads Nearshore de alta performance dedicados à evolução do seu produto. Entrega contínua e otimização.",
+                "spec.poc.title": "Fábrica de PoC & MVP",
+                "spec.poc.desc": "Prototipagem rápida para Data as a Service (DaaS) e Produtos de Plataforma. Validamos hipóteses rápido: falhe rápido ou escale mais rápido.",
+                "spec.enable.title": "Tech Enablement",
+                "spec.enable.desc": "Estruturando tecnologia para impulsionar negócios. Não apenas construímos; habilitamos seus times internos com frameworks e governança automatizada.",
+                "tech.pageLabel": "Nossa Expertise",
+                "tech.mainTitle": "Tech Agnostic. <br>Arquitetura Primeiro.",
+                "tech.mesh.title": "Data Mesh & Produtos",
+                "tech.mesh.desc": "Propriedade de dados descentralizada. Tratando domínios de dados como produtos com SLAs definidos e consumidores.",
+                "tech.cloud.title": "Multi-Cloud & Foco GCP",
+                "tech.cloud.desc": "Profunda expertise em Google Cloud (BigQuery, Vertex AI), mas totalmente capazes em AWS, Azure e stacks Open Source.",
+                "tech.modern.title": "Stack Moderno",
+                "tech.modern.desc": "Terraform para IaC, dbt/Dataform para transformação, Airflow/Prefect para orquestração. Usamos padrões modernos.",
+                "footer.about": "Firma premium de execução digital, dados e IA em modelo nearshore. Focada em resolver gargalos críticos de produto e tecnologia.",
                 "footer.contactTitle": "Contato",
                 "footer.contactBtn": "Iniciar Conversa",
-                "footer.rights": "&copy; 2024 Perceptya. Todos os direitos reservados.",
-                "footer.privacy": "Privacidade",
-                "footer.terms": "Termos"
+                "footer.rights": "&copy; 2024 Perceptya. Todos os direitos reservados."
             },
             es: {
                 "nav.manifesto": "Manifiesto",
@@ -550,36 +604,54 @@
                 "hero.title2": "otros no ven.",
                 "hero.subtitle": "Transformando inversiones en Tecnología, Datos e IA en ",
                 "hero.subtitleBold": "resultados reales de negocio",
-                "hero.subtitleEnd": ". Sin discursos, solo ejecución disciplinada.",
+                "hero.subtitleEnd": ". Impacto desde el Día 1. Tech Agnostic.",
                 "hero.ctaPrimary": "Agendar Diagnóstico",
-                "hero.ctaSecondary": "Explorar Soluciones",
-                "manifesto.label": "Nuestra Tesis",
-                "manifesto.title": "La ejecución precede <br>al discurso.",
-                "manifesto.p1": "Las empresas medianas y grandes no fallan en capturar valor de IA por falta de herramientas, sino por la falta de orquestación entre ",
-                "manifesto.p1Bold": "Estrategia, Ingeniería y Ejecución",
-                "manifesto.p2": "Perceptya existe para llenar este vacío. Posicionada entre las consultorías de diapositivas y los body shops genéricos, entregamos capacidad senior crítica con visión de producto.",
-                "services.label": "Portafolio de Servicios",
-                "services.title": "El Modelo G1-G4",
-                "services.subtitle": "Una jornada estructurada desde el diagnóstico hasta la operación continua de IA.",
-                "services.g1.p1": "Madurez de Datos",
-                "services.g1.p2": "Arquitectura To-Be",
-                "services.g1.p3": "Business Case ROI",
-                "services.g2.p2": "Gobernanza Medallion",
-                "services.g2.p3": "Migración BigQuery",
-                "services.g3.p3": "Automatización Inteligente",
-                "services.g4.p1": "Squads Dedicados",
-                "services.g4.p2": "Evolución Continua",
-                "services.g4.p3": "Gestión Nearshore",
-                "tech.label": "Tech Stack & Expertise",
-                "tech.title": "Ingeniería Moderna <br>y Cloud Native.",
-                "tech.desc": "Nacidos en la nube, somos especialistas en el ecosistema de datos moderno. Nuestra arquitectura de referencia garantiza escala, seguridad y gobernanza desde el día cero.",
+                "hero.ctaSecondary": "Leer Manifiesto",
+                "thesis.label": "Nuestro Enfoque",
+                "thesis.title": "Entender el Dolor Real. <br>Entregar Valor.",
+                "thesis.p1": "No solo implementamos infraestructura. Comenzamos identificando las **oportunidades latentes de valor** donde la tecnología realmente impulsa el negocio.",
+                "thesis.p2": "Somos <strong class='text-brand-gold'>Tech Agnostic</strong>. Ya sea Open Source o Propietario, AWS, Azure o GCP — usamos lo que mejor resuelva el problema.",
+                "thesis.link": "Ver Manifiesto Completo",
+                "thesis.stat1": "Generación de Impacto",
+                "thesis.stat2": "Vendor Agnostic",
+                "thesis.stat3": "Talento Global",
+                "thesis.stat4": "Equipos Expertos",
+                "nearshore.title": "Ejecución Nearshore de Clase Mundial",
+                "nearshore.subtitle": "Nuestros equipos no son solo manos remotas; son ingenieros y arquitectos senior experimentados en proyectos globales. Unimos la zona horaria compatible con inglés fluido y alineación cultural profunda.",
+                "manifesto.header": "Nuestra Visión",
+                "manifesto.headline": "Datos como Activador. <br>Tech como Habilitador.",
+                "manifesto.body1": "Creemos que los datos no solo deben almacenarse; deben <strong>activar nuevos negocios</strong>. En un mundo ahogado en información, ganan aquellos que usan datos para romper barreras.",
+                "manifesto.quote": "\"La tecnología debe ser un habilitador natural de la estrategia, nunca un factor de riesgo.\"",
+                "manifesto.body2": "Muchas empresas ven la tecnología como un costo o un pasivo. Nosotros invertimos el guion. Vemos la tecnología como la estructura que permite al músculo del negocio flexionarse.",
+                "manifesto.body3": "Nuestro manifiesto es simple: <strong>Entiende el dolor primero.</strong> Construye solo lo que crea valor. Sé agnóstico en herramientas, pero dogmático en calidad.",
+                "services.pageTitle": "Servicios y Soluciones",
+                "services.modelTitle": "El Modelo G1-G4",
+                "services.modelDesc": "Una evolución estructurada desde el descubrimiento de valor hasta la operación escalable de IA.",
+                "g1.title": "Diagnóstico de Valor",
+                "g1.duration": "Sprint de 1-2 Semanas",
+                "g1.desc": "Enfoque en dolores reales y oportunidades latentes. Analizamos tecnología estructural y planes de negocio para definir dónde los datos crean servicios.",
+                "g2.title": "Modernización de Plataforma",
+                "g2.desc": "Implementación de arquitecturas Lakehouse. Tratando Datos como Plataforma y Datos como Producto. Fundaciones escalables y gobernadas.",
+                "g3.title": "IA Aplicada y Agéntica",
+                "g3.desc": "Más allá de los chatbots. Implementando GenAI y Agentes Autónomos que ejecutan flujos de trabajo complejos e impulsan la automatización.",
+                "g4.title": "PODs Dedicados",
+                "g4.desc": "Squads Nearshore de alto rendimiento dedicados a la evolución de su producto. Entrega continua y optimización.",
+                "spec.poc.title": "Fábrica de PoC & MVP",
+                "spec.poc.desc": "Prototipado rápido para Data as a Service (DaaS) y Productos de Plataforma. Validamos hipótesis rápido: falla rápido o escala más rápido.",
+                "spec.enable.title": "Tech Enablement",
+                "spec.enable.desc": "Estructurando tecnología para impulsar negocios. No solo construimos; habilitamos a sus equipos internos con frameworks y gobernanza automatizada.",
+                "tech.pageLabel": "Nuestra Experiencia",
+                "tech.mainTitle": "Tech Agnostic. <br>Arquitectura Primero.",
+                "tech.mesh.title": "Data Mesh & Productos",
+                "tech.mesh.desc": "Propiedad de datos descentralizada. Tratando dominios de datos como productos con SLAs definidos y consumidores.",
+                "tech.cloud.title": "Multi-Cloud & Enfoque GCP",
+                "tech.cloud.desc": "Profunda experiencia en Google Cloud (BigQuery, Vertex AI), pero totalmente capaces en AWS, Azure y stacks Open Source.",
+                "tech.modern.title": "Stack Moderno",
+                "tech.modern.desc": "Terraform para IaC, dbt/Dataform para transformación, Airflow/Prefect para orquestación. Usamos estándares modernos.",
                 "footer.about": "Firma premium de ejecución digital, datos e IA en modelo nearshore. Enfocada en resolver cuellos de botella críticos de producto y tecnología.",
-                "footer.servicesTitle": "Servicios",
                 "footer.contactTitle": "Contacto",
                 "footer.contactBtn": "Iniciar Conversación",
-                "footer.rights": "&copy; 2024 Perceptya. Todos los derechos reservados.",
-                "footer.privacy": "Privacidad",
-                "footer.terms": "Términos"
+                "footer.rights": "&copy; 2024 Perceptya. Todos los derechos reservados."
             }
         };
 
@@ -588,8 +660,8 @@
             const elements = document.querySelectorAll('[data-i18n]');
             elements.forEach(el => {
                 const key = el.getAttribute('data-i18n');
-                if (translations[lang][key]) {
-                    // Check if content has HTML tags (like <br> or <strong>)
+                if (translations[lang] && translations[lang][key]) {
+                    // Check if content has HTML tags
                     if (translations[lang][key].includes('<') || el.children.length > 0) {
                          el.innerHTML = translations[lang][key];
                     } else {
@@ -602,28 +674,9 @@
             document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
             const activeBtn = document.getElementById(`btn-${lang}`);
             if(activeBtn) activeBtn.classList.add('active');
-            
-            // Re-trigger icon updates if needed (not needed strictly for text)
         }
 
-        // Scroll Reveal Animation
-        const revealElements = document.querySelectorAll('.reveal');
-        
-        const revealOnScroll = () => {
-            const windowHeight = window.innerHeight;
-            const elementVisible = 150;
-            
-            revealElements.forEach((reveal) => {
-                const elementTop = reveal.getBoundingClientRect().top;
-                if (elementTop < windowHeight - elementVisible) {
-                    reveal.classList.add('active');
-                }
-            });
-        }
-        
-        window.addEventListener('scroll', revealOnScroll);
-        
-        // Navbar blur effect on scroll
+        // Navbar blur effect
         const navbar = document.getElementById('navbar');
         window.addEventListener('scroll', () => {
             if (window.scrollY > 50) {
@@ -634,9 +687,6 @@
                 navbar.classList.add('bg-transparent');
             }
         });
-
-        // Trigger once on load
-        revealOnScroll();
     </script>
 </body>
 </html>
