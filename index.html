@@ -6,14 +6,18 @@
     <title>Perceptya | Data Strategy & Applied AI</title>
     <meta name="description" content="Turning investments in Tech, Data, and AI into real business results. Premium nearshore execution.">
     
+    <!-- Fonts: Urbanist (Premium Tech feel) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
+    <!-- Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
+    <!-- Custom Config for Brand Colors -->
     <script>
         tailwind.config = {
             theme: {
@@ -107,11 +111,13 @@
         }
     </style>
 </head>
-<body class="bg-brand-dark text-brand-text antialiased selection:bg-brand-gold selection:text-brand-dark">
+<body class="bg-brand-dark text-brand-text antialiased selection:bg-brand-gold selection:text-brand-dark overflow-x-hidden">
 
+    <!-- Navigation -->
     <nav class="fixed w-full z-50 glass-panel border-b border-white/5 transition-all duration-300" id="navbar">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-20">
+                <!-- Logo -->
                 <div class="flex-shrink-0 flex items-center gap-3 cursor-pointer" onclick="navigateTo('home')">
                     <svg width="40" height="40" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M50 50L50 10L84.64 30L84.64 70L50 90L15.36 70L15.36 30L50 10" stroke="#D4AF37" stroke-width="2" stroke-opacity="0.5"/>
@@ -123,6 +129,7 @@
                     <span class="text-2xl font-bold tracking-tight text-white">PERCEPTYA</span>
                 </div>
                 
+                <!-- Desktop Menu -->
                 <div class="hidden md:flex items-center gap-8">
                     <div class="flex items-baseline space-x-8">
                         <button onclick="navigateTo('manifesto')" class="hover:text-brand-gold transition-colors px-3 py-2 text-sm font-medium" data-i18n="nav.manifesto">Manifesto</button>
@@ -130,6 +137,7 @@
                         <button onclick="navigateTo('tech')" class="hover:text-brand-gold transition-colors px-3 py-2 text-sm font-medium" data-i18n="nav.tech">Technology</button>
                     </div>
                     
+                    <!-- Language Switcher -->
                     <div class="flex items-center gap-3 border-l border-white/10 pl-6">
                         <button onclick="changeLanguage('en')" class="lang-btn active text-sm font-medium" id="btn-en">EN</button>
                         <button onclick="changeLanguage('pt')" class="lang-btn text-sm font-medium" id="btn-pt">PT</button>
@@ -141,6 +149,7 @@
                     </a>
                 </div>
 
+                <!-- Mobile menu button -->
                 <div class="-mr-2 flex md:hidden gap-4 items-center">
                      <div class="flex items-center gap-2">
                         <button onclick="changeLanguage('en')" class="text-xs font-bold text-brand-gold">EN</button>
@@ -152,6 +161,7 @@
                 </div>
             </div>
         </div>
+        <!-- Mobile Menu -->
         <div class="hidden md:hidden glass-panel border-t border-white/10" id="mobile-menu">
             <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col">
                 <button onclick="navigateTo('manifesto')" class="text-left block px-3 py-2 rounded-md text-base font-medium hover:text-brand-gold" data-i18n="nav.manifesto">Manifesto</button>
@@ -162,13 +172,17 @@
         </div>
     </nav>
 
+    <!-- VIEWS CONTAINER -->
     <main id="main-content">
 
+        <!-- ==================== HOME VIEW ==================== -->
         <section id="home" class="spa-view active">
+            <!-- Hero -->
             <header class="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
                 <div class="absolute inset-0 z-0">
                     <div class="absolute inset-0 bg-brand-dark opacity-90"></div>
-                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-lens-glow rounded-full blur-3xl opacity-40 animate-pulse"></div>
+                    <!-- Added max-w for mobile constraint -->
+                    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] max-w-full h-[800px] bg-lens-glow rounded-full blur-3xl opacity-40 animate-pulse"></div>
                     <div class="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-5"></div>
                 </div>
 
@@ -178,12 +192,12 @@
                         <span class="text-brand-gold text-xs font-bold tracking-widest uppercase">Premium Nearshore Data & AI</span>
                     </div>
                     
-                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-bold text-brand-white tracking-tight mb-8 leading-tight">
+                    <h1 class="text-4xl md:text-7xl lg:text-8xl font-bold text-brand-white tracking-tight mb-8 leading-tight">
                         <span data-i18n="hero.title1">We see what</span> <br>
                         <span class="gold-gradient-text" data-i18n="hero.title2">others miss.</span>
                     </h1>
                     
-                    <p class="mt-4 max-w-2xl mx-auto text-xl md:text-2xl text-brand-text font-light leading-relaxed">
+                    <p class="mt-4 max-w-2xl mx-auto text-lg md:text-2xl text-brand-text font-light leading-relaxed">
                         <span data-i18n="hero.subtitle">Turning investments in Tech, Data, and AI into </span>
                         <strong class="text-white font-semibold" data-i18n="hero.subtitleBold">real business results</strong>.
                         <span data-i18n="hero.subtitleEnd">Day 1 Impact. Tech Agnostic.</span>
@@ -203,6 +217,7 @@
                 </div>
             </header>
 
+            <!-- Thesis Teaser -->
             <section class="py-24 bg-brand-navy relative">
                 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
@@ -247,22 +262,52 @@
                 </div>
             </section>
 
+            <!-- Nearshore Highlight -->
             <section class="py-20 bg-brand-dark border-t border-white/5">
                 <div class="max-w-7xl mx-auto px-4 text-center">
                     <h2 class="text-3xl font-bold text-white mb-6" data-i18n="nearshore.title">World-Class Nearshore Execution</h2>
                     <p class="max-w-3xl mx-auto text-gray-400 text-lg mb-10" data-i18n="nearshore.subtitle">
-                        Our teams are not just remote hands; they are senior engineers and architects experienced in global projects. 
-                        We bridge the gap with compatible timezones, fluent English, and deep cultural alignment.
+                        Our teams are distinguished professionals, experienced on overseas projects. 
+                        We bridge the gap with compatible timezones, fluent English, and deep technical skills.
                     </p>
-                    <div class="flex justify-center gap-8 text-gray-500">
+                    <div class="flex flex-wrap justify-center gap-8 text-gray-500">
                         <div class="flex items-center gap-2"><i data-lucide="globe" class="text-brand-gold"></i> US/Canada/LATAM</div>
                         <div class="flex items-center gap-2"><i data-lucide="clock" class="text-brand-gold"></i> Timezone Aligned</div>
                         <div class="flex items-center gap-2"><i data-lucide="message-square" class="text-brand-gold"></i> Fluent English</div>
                     </div>
                 </div>
             </section>
+
+            <!-- Data is Gold Section -->
+            <section class="py-20 bg-gradient-to-b from-brand-dark to-brand-navy border-t border-brand-gold/10">
+                <div class="max-w-7xl mx-auto px-4 text-center">
+                    <div class="inline-block p-3 rounded-full bg-brand-gold/10 border border-brand-gold mb-6">
+                        <i data-lucide="database" class="w-8 h-8 text-brand-gold"></i>
+                    </div>
+                    <h2 class="text-4xl font-bold text-white mb-8" data-i18n="dataGold.title">Data is the Gold</h2>
+                    
+                    <div class="max-w-4xl mx-auto text-lg text-gray-300 space-y-6 mb-12">
+                        <p data-i18n="dataGold.p1">
+                            To capture real value from AI, GenAI, and Autonomous Agents, you first need to treat your data right. It's not just about storage; it's about ensuring data is high-value, up-to-date, curated, and cataloged.
+                        </p>
+                        <p data-i18n="dataGold.p2">
+                            Without a robust foundation, AI is just a toy. We prepare your data ecosystem to be the reliable fuel for intelligent agents and advanced analytics, ensuring every byte serves a business purpose.
+                        </p>
+                    </div>
+
+                    <div class="max-w-3xl mx-auto bg-brand-dark/50 border-l-4 border-red-500 p-6 rounded-r-xl text-left">
+                        <div class="flex gap-4">
+                            <i data-lucide="alert-triangle" class="w-6 h-6 text-red-500 shrink-0 mt-1"></i>
+                            <div>
+                                <p class="text-white text-xl font-bold italic" data-i18n="dataGold.quote">"Be careful what you feed your AI. Bad data breeds bad decisions."</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </section>
 
+        <!-- ==================== MANIFESTO VIEW ==================== -->
         <section id="manifesto" class="spa-view bg-brand-navy">
             <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <div class="text-center mb-16">
@@ -292,6 +337,7 @@
             </div>
         </section>
 
+        <!-- ==================== SERVICES VIEW ==================== -->
         <section id="services" class="spa-view bg-brand-dark">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <div class="text-center mb-16">
@@ -300,7 +346,9 @@
                     <p class="text-gray-400 max-w-2xl mx-auto" data-i18n="services.modelDesc">A structured evolution from discovering value to scaling AI operations.</p>
                 </div>
 
+                <!-- G1-G4 GRID -->
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-20">
+                    <!-- G1 -->
                     <div class="glass-panel p-8 rounded-2xl border-t-4 border-brand-gold hover:-translate-y-2 transition-transform">
                         <div class="text-6xl font-bold text-brand-navy mb-4 opacity-50 absolute right-4 top-4">G1</div>
                         <h3 class="text-2xl font-bold text-white mb-2" data-i18n="g1.title">Value Diagnosis</h3>
@@ -309,14 +357,16 @@
                             Focus on real pain points and latent opportunities. We analyze structural tech and business plans to define where data creates services.
                         </p>
                     </div>
+                     <!-- G2 -->
                      <div class="glass-panel p-8 rounded-2xl border-t-4 border-gray-600 hover:-translate-y-2 transition-transform">
                         <div class="text-6xl font-bold text-brand-navy mb-4 opacity-50 absolute right-4 top-4">G2</div>
                         <h3 class="text-2xl font-bold text-white mb-2" data-i18n="g2.title">Platform Modernization</h3>
                         <p class="text-gray-500 text-sm font-bold mb-4">Build & Structure</p>
                         <p class="text-gray-400 text-sm mb-4" data-i18n="g2.desc">
-                            Implementation of Lakehouse architectures. Treating Data as a Platform and Data as a Product. scalable and governed foundations.
+                            Expertise in Datalakes, Lakehouse architectures, Lift and Shift migrations, and complete Data Architecture Modernization.
                         </p>
                     </div>
+                     <!-- G3 -->
                      <div class="glass-panel p-8 rounded-2xl border-t-4 border-blue-500 hover:-translate-y-2 transition-transform">
                         <div class="text-6xl font-bold text-brand-navy mb-4 opacity-50 absolute right-4 top-4">G3</div>
                         <h3 class="text-2xl font-bold text-white mb-2" data-i18n="g3.title">Applied & Agentic AI</h3>
@@ -325,6 +375,7 @@
                             Moving beyond chatbots. Implementing GenAI and Autonomous Agents that execute complex workflows and drive automation.
                         </p>
                     </div>
+                     <!-- G4 -->
                      <div class="glass-panel p-8 rounded-2xl border-t-4 border-green-500 hover:-translate-y-2 transition-transform">
                         <div class="text-6xl font-bold text-brand-navy mb-4 opacity-50 absolute right-4 top-4">G4</div>
                         <h3 class="text-2xl font-bold text-white mb-2" data-i18n="g4.title">Dedicated PODs</h3>
@@ -335,12 +386,13 @@
                     </div>
                 </div>
 
+                <!-- SPECIALTIES -->
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <div class="bg-brand-navy p-8 rounded-xl border border-white/5">
                         <i data-lucide="flask-conical" class="w-10 h-10 text-brand-gold mb-4"></i>
-                        <h3 class="text-xl font-bold text-white mb-3" data-i18n="spec.poc.title">PoC & MVP Factory</h3>
+                        <h3 class="text-xl font-bold text-white mb-3" data-i18n="spec.poc.title">PoC & MVP Studio</h3>
                         <p class="text-gray-400" data-i18n="spec.poc.desc">
-                            Rapid prototyping for Data as a Service (DaaS) and Platform Products. We validate hypotheses fast: fail fast or scale faster. 
+                            We rapidly test business hypotheses for Data as a Service (DaaS), Platform, and Product. We validate before you scale. Fail fast or scale faster.
                         </p>
                     </div>
                     <div class="bg-brand-navy p-8 rounded-xl border border-white/5">
@@ -354,6 +406,7 @@
             </div>
         </section>
 
+        <!-- ==================== TECH VIEW ==================== -->
         <section id="tech" class="spa-view bg-brand-navy">
             <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
                 <div class="flex flex-col md:flex-row gap-16">
@@ -387,6 +440,7 @@
                     </div>
                     
                     <div class="md:w-1/2">
+                        <!-- Terminal Visual -->
                         <div class="bg-brand-dark p-6 rounded-xl border border-white/10 shadow-2xl font-mono text-sm h-full">
                             <div class="flex gap-2 mb-4">
                                 <div class="w-3 h-3 rounded-full bg-red-500"></div>
@@ -421,6 +475,7 @@
 
     </main>
 
+    <!-- Footer / Contact (Common) -->
     <footer id="contact-section" class="bg-black pt-24 pb-12 border-t border-brand-gold/20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
@@ -433,7 +488,7 @@
                         <span class="text-2xl font-bold text-white tracking-tight">PERCEPTYA</span>
                     </div>
                     <p class="text-gray-400 max-w-sm mb-6" data-i18n="footer.about">
-                        Premium digital execution, data, and AI firm in nearshore model. Focused on solving critical product and technology bottlenecks.
+                        Premium firm specialized in overseas projects across different timezones. We solve critical business issues involving technology for Data and AI.
                     </p>
                 </div>
                 
@@ -501,7 +556,11 @@
                 "thesis.stat3": "Global Talent",
                 "thesis.stat4": "Expert Teams",
                 "nearshore.title": "World-Class Nearshore Execution",
-                "nearshore.subtitle": "Our teams are not just remote hands; they are senior engineers and architects experienced in global projects. We bridge the gap with compatible timezones, fluent English, and deep cultural alignment.",
+                "nearshore.subtitle": "Our teams are distinguished professionals, experienced on overseas projects. We bridge the gap with compatible timezones, fluent English, and deep technical skills.",
+                "dataGold.title": "Data is the Gold",
+                "dataGold.p1": "To capture real value from AI, GenAI, and Autonomous Agents, you first need to treat your data right. It's not just about storage; it's about ensuring data is high-value, up-to-date, curated, and cataloged.",
+                "dataGold.p2": "Without a robust foundation, AI is just a toy. We prepare your data ecosystem to be the reliable fuel for intelligent agents and advanced analytics, ensuring every byte serves a business purpose.",
+                "dataGold.quote": "\"Be careful what you feed your AI. Bad data breeds bad decisions.\"",
                 "manifesto.header": "Our Vision",
                 "manifesto.headline": "Data as an Activator. <br>Tech as an Enabler.",
                 "manifesto.body1": "We believe that data shouldn't just be stored; it should <strong>activate new business</strong>. In a world drowning in information, the winners are those who use data to break barriers and enable new opportunities.",
@@ -515,13 +574,13 @@
                 "g1.duration": "1-2 Weeks Sprint",
                 "g1.desc": "Focus on real pain points and latent opportunities. We analyze structural tech and business plans to define where data creates services.",
                 "g2.title": "Platform Modernization",
-                "g2.desc": "Implementation of Lakehouse architectures. Treating Data as a Platform and Data as a Product. Scalable and governed foundations.",
+                "g2.desc": "Expertise in Datalakes, Lakehouse architectures, Lift and Shift migrations, and complete Data Architecture Modernization.",
                 "g3.title": "Applied & Agentic AI",
                 "g3.desc": "Moving beyond chatbots. Implementing GenAI and Autonomous Agents that execute complex workflows and drive automation.",
                 "g4.title": "Dedicated PODs",
                 "g4.desc": "High-performance Nearshore squads dedicated to your product evolution. Continuous delivery and optimization.",
-                "spec.poc.title": "PoC & MVP Factory",
-                "spec.poc.desc": "Rapid prototyping for Data as a Service (DaaS) and Platform Products. We validate hypotheses fast: fail fast or scale faster.",
+                "spec.poc.title": "PoC & MVP Studio",
+                "spec.poc.desc": "We rapidly test business hypotheses for Data as a Service (DaaS), Platform, and Product. We validate before you scale. Fail fast or scale faster.",
                 "spec.enable.title": "Tech Enablement",
                 "spec.enable.desc": "Structuring technology to boost business. We don't just build; we enable your internal teams with frameworks, best practices, and automated governance.",
                 "tech.pageLabel": "Our Expertise",
@@ -532,7 +591,7 @@
                 "tech.cloud.desc": "Deep expertise in Google Cloud (BigQuery, Vertex AI), but fully capable in AWS, Azure, and Open Source stacks.",
                 "tech.modern.title": "Modern Stack",
                 "tech.modern.desc": "Terraform for IaC, dbt/Dataform for transformation, Airflow/Prefect for orchestration. We use modern standards.",
-                "footer.about": "Premium digital execution, data, and AI firm in nearshore model. Focused on solving critical product and technology bottlenecks.",
+                "footer.about": "Premium firm specialized in overseas projects across different timezones. We solve critical business issues involving technology for Data and AI.",
                 "footer.contactTitle": "Contact",
                 "footer.contactBtn": "Start Conversation",
                 "footer.rights": "&copy; 2024 Perceptya. All rights reserved."
@@ -559,7 +618,11 @@
                 "thesis.stat3": "Talento Global",
                 "thesis.stat4": "Times Experts",
                 "nearshore.title": "Execução Nearshore de Classe Mundial",
-                "nearshore.subtitle": "Nossos times não são apenas braços remotos; são engenheiros e arquitetos seniores experientes em projetos globais. Unimos o fuso horário compatível com inglês fluente e alinhamento cultural profundo.",
+                "nearshore.subtitle": "Nossos times são formados por profissionais distintos, experientes em projetos no exterior. Unimos o fuso horário compatível com inglês fluente e profundas habilidades técnicas.",
+                "dataGold.title": "Dados são Ouro",
+                "dataGold.p1": "Para capturar valor real com IA, GenAI e Agentes Autônomos, primeiro você precisa tratar bem seus dados. Não se trata apenas de armazenamento; é garantir que os dados sejam de alto valor, atualizados, curados e catalogados.",
+                "dataGold.p2": "Sem uma fundação robusta, IA é apenas um brinquedo. Preparamos seu ecossistema de dados para ser o combustível confiável para agentes inteligentes e análises avançadas, garantindo que cada byte sirva a um propósito de negócio.",
+                "dataGold.quote": "\"Cuidado com o que você alimenta sua IA. Dados ruins geram decisões ruins.\"",
                 "manifesto.header": "Nossa Visão",
                 "manifesto.headline": "Dados como Ativador. <br>Tech como Habilitador.",
                 "manifesto.body1": "Acreditamos que dados não devem apenas ser armazenados; devem <strong>ativar novos negócios</strong>. Em um mundo afogado em informação, vencem aqueles que usam dados para quebrar barreiras.",
@@ -573,13 +636,13 @@
                 "g1.duration": "Sprint de 1-2 Semanas",
                 "g1.desc": "Foco em dores reais e oportunidades latentes. Analisamos tecnologia estruturante e planos de negócio para definir onde dados criam serviços.",
                 "g2.title": "Modernização de Plataforma",
-                "g2.desc": "Implementação de arquiteturas Lakehouse. Tratando Dados como Plataforma e Dados como Produto. Fundações escaláveis e governadas.",
+                "g2.desc": "Expertise em Datalakes, arquiteturas Lakehouse, migrações Lift and Shift e Modernização completa de Arquitetura de Dados.",
                 "g3.title": "IA Aplicada & Agêntica",
                 "g3.desc": "Indo além dos chatbots. Implementando GenAI e Agentes Autônomos que executam fluxos de trabalho complexos e impulsionam automação.",
                 "g4.title": "PODs Dedicados",
                 "g4.desc": "Squads Nearshore de alta performance dedicados à evolução do seu produto. Entrega contínua e otimização.",
-                "spec.poc.title": "Fábrica de PoC & MVP",
-                "spec.poc.desc": "Prototipagem rápida para Data as a Service (DaaS) e Produtos de Plataforma. Validamos hipóteses rápido: falhe rápido ou escale mais rápido.",
+                "spec.poc.title": "Estúdio de PoC & MVP",
+                "spec.poc.desc": "Testamos rapidamente hipóteses de negócio para Data as a Service (DaaS), Platform e Product. Validamos antes de escalar. Falhe rápido ou escale mais rápido.",
                 "spec.enable.title": "Tech Enablement",
                 "spec.enable.desc": "Estruturando tecnologia para impulsionar negócios. Não apenas construímos; habilitamos seus times internos com frameworks e governança automatizada.",
                 "tech.pageLabel": "Nossa Expertise",
@@ -590,7 +653,7 @@
                 "tech.cloud.desc": "Profunda expertise em Google Cloud (BigQuery, Vertex AI), mas totalmente capazes em AWS, Azure e stacks Open Source.",
                 "tech.modern.title": "Stack Moderno",
                 "tech.modern.desc": "Terraform para IaC, dbt/Dataform para transformação, Airflow/Prefect para orquestração. Usamos padrões modernos.",
-                "footer.about": "Firma premium de execução digital, dados e IA em modelo nearshore. Focada em resolver gargalos críticos de produto e tecnologia.",
+                "footer.about": "Empresa premium especializada em trabalhos em diferentes timezones, overseas, focada em questões críticas de negócio que envolvem tecnologia para dados e IA.",
                 "footer.contactTitle": "Contato",
                 "footer.contactBtn": "Iniciar Conversa",
                 "footer.rights": "&copy; 2024 Perceptya. Todos os direitos reservados."
@@ -617,12 +680,16 @@
                 "thesis.stat3": "Talento Global",
                 "thesis.stat4": "Equipos Expertos",
                 "nearshore.title": "Ejecución Nearshore de Clase Mundial",
-                "nearshore.subtitle": "Nuestros equipos no son solo manos remotas; son ingenieros y arquitectos senior experimentados en proyectos globales. Unimos la zona horaria compatible con inglés fluido y alineación cultural profunda.",
+                "nearshore.subtitle": "Nuestros equipos son profesionales distinguidos, con experiencia en proyectos en el extranjero. Unimos la zona horaria compatible con inglés fluido y profundas habilidades técnicas.",
+                "dataGold.title": "Los Datos son Oro",
+                "dataGold.p1": "Para capturar valor real con IA, GenAI y Agentes Autónomos, primero necesita tratar bien sus datos. No se trata solo de almacenamiento; es garantizar que los datos sean de alto valor, actualizados, curados y catalogados.",
+                "dataGold.p2": "Sin una base sólida, la IA es solo un juguete. Preparamos su ecosistema de datos para ser el combustible confiable para agentes inteligentes y análisis avanzados, asegurando que cada byte sirva a un propósito comercial.",
+                "dataGold.quote": "\"Cuidado con lo que alimenta a su IA. Malos datos generan malas decisiones.\"",
                 "manifesto.header": "Nuestra Visión",
                 "manifesto.headline": "Datos como Activador. <br>Tech como Habilitador.",
                 "manifesto.body1": "Creemos que los datos no solo deben almacenarse; deben <strong>activar nuevos negocios</strong>. En un mundo ahogado en información, ganan aquellos que usan datos para romper barreras.",
                 "manifesto.quote": "\"La tecnología debe ser un habilitador natural de la estrategia, nunca un factor de riesgo.\"",
-                "manifesto.body2": "Muchas empresas ven la tecnología como un costo o un pasivo. Nosotros invertimos el guion. Vemos la tecnología como la estructura que permite al músculo del negocio flexionarse.",
+                "manifesto.body2": "Muchas empresas ven la tecnología como un costo o un pasivo. Nosotros invertimos el guion. Vemos la tecnología como la estructura que permite al músculo do negocio flexionarse.",
                 "manifesto.body3": "Nuestro manifiesto es simple: <strong>Entiende el dolor primero.</strong> Construye solo lo que crea valor. Sé agnóstico en herramientas, pero dogmático en calidad.",
                 "services.pageTitle": "Servicios y Soluciones",
                 "services.modelTitle": "El Modelo G1-G4",
@@ -631,13 +698,13 @@
                 "g1.duration": "Sprint de 1-2 Semanas",
                 "g1.desc": "Enfoque en dolores reales y oportunidades latentes. Analizamos tecnología estructural y planes de negocio para definir dónde los datos crean servicios.",
                 "g2.title": "Modernización de Plataforma",
-                "g2.desc": "Implementación de arquitecturas Lakehouse. Tratando Datos como Plataforma y Datos como Producto. Fundaciones escalables y gobernadas.",
+                "g2.desc": "Experiencia en Datalakes, arquitecturas Lakehouse, migraciones Lift and Shift y Modernización completa de Arquitectura de Datos.",
                 "g3.title": "IA Aplicada y Agéntica",
                 "g3.desc": "Más allá de los chatbots. Implementando GenAI y Agentes Autónomos que ejecutan flujos de trabajo complejos e impulsan la automatización.",
                 "g4.title": "PODs Dedicados",
                 "g4.desc": "Squads Nearshore de alto rendimiento dedicados a la evolución de su producto. Entrega continua y optimización.",
-                "spec.poc.title": "Fábrica de PoC & MVP",
-                "spec.poc.desc": "Prototipado rápido para Data as a Service (DaaS) y Productos de Plataforma. Validamos hipótesis rápido: falla rápido o escala más rápido.",
+                "spec.poc.title": "Estudio de PoC y MVP",
+                "spec.poc.desc": "Probamos rápidamente hipótesis para Data as a Service (DaaS), Platform y Product. Validamos antes de escalar. Falla rápido o escala más rápido.",
                 "spec.enable.title": "Tech Enablement",
                 "spec.enable.desc": "Estructurando tecnología para impulsar negocios. No solo construimos; habilitamos a sus equipos internos con frameworks y gobernanza automatizada.",
                 "tech.pageLabel": "Nuestra Experiencia",
@@ -648,7 +715,7 @@
                 "tech.cloud.desc": "Profunda experiencia en Google Cloud (BigQuery, Vertex AI), pero totalmente capaces en AWS, Azure y stacks Open Source.",
                 "tech.modern.title": "Stack Moderno",
                 "tech.modern.desc": "Terraform para IaC, dbt/Dataform para transformación, Airflow/Prefect para orquestación. Usamos estándares modernos.",
-                "footer.about": "Firma premium de ejecución digital, datos e IA en modelo nearshore. Enfocada en resolver cuellos de botella críticos de producto y tecnología.",
+                "footer.about": "Firma premium especializada en proyectos en el extranjero en diferentes zonas horarias. Resolvemos problemas comerciales críticos que involucran tecnología para Datos e IA.",
                 "footer.contactTitle": "Contacto",
                 "footer.contactBtn": "Iniciar Conversación",
                 "footer.rights": "&copy; 2024 Perceptya. Todos los derechos reservados."
